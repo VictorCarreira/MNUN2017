@@ -80,6 +80,9 @@ nx =  INT(x/dx)+1 ! conversao de inteiro em real 4 somente para o cálculo de dx
 ny =  INT(y/dy)+1
 nz =  INT(z/dz)+1
 
+!snap_passos=INT(nt/nsnap) !Transforma o número de snpas em número de passos de tempo.
+
+
 PRINT*,'ny=', ny
 PRINT*,'nx=', nx
 
