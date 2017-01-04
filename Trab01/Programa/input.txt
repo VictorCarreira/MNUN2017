@@ -1,5 +1,5 @@
-1000       # dimensao da placa em cm (x);
-1000       # dimensao da placa em cm (y);
+400       # dimensao da placa em cm (x);
+200       # dimensao da placa em cm (y);
 1        # subdivisoes horizontais na placa (dx);
 1        # subdivisoes verticais na placa (dy);
 50       # laco temporal (z);
@@ -9,4 +9,4 @@
 50.0     # temperatura na borda direita (Tdir);
 150.0    # temperatura na borda superior (Tsup);
 30.0     # temperatura na borda inferior (Tinf);
-50       # numero de snapshots (nsnap).
+20       # numero de snapshots (nsnap).
