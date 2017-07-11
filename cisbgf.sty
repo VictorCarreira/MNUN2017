@@ -1,0 +1,177 @@
+% Brazilian Society of Geophysics
+% LaTeX2e style to produce expanded abstract for the International Congress
+% of Geophysics
+% Originally made by Hédison Kiuity Sato 
+% Modified and revised by Rodrigo Portugal to be in CISBGF2005 format
+% 07/mar/2005
+% Modified and revised by Adelson Oliveira to be in CISBGF2007 format
+% 29/mar/2007
+% Modified and revised by Jurandyr Schmidt to be in CISBGF2009 format : 05/01/2009
+% Modified and revised by Jurandyr Schmidt to be in CISBGF2009 format : 21/12/2010
+% Modified and revised by Adelson Oliveira to be in CISBGF2013 format : 28/02/2013
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{cisbgf}[2013/02/28 SBGf Expanded Abstract Class]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Package to format headers and footers
+\RequirePackage{fancyhdr}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Package to include graphics     
+\RequirePackage{graphicx}  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Package to include PostScript files
+\RequirePackage{epsfig}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Package to allow latin characters
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Packages to tormat font family to Helvetica (Arial)
+\RequirePackage{times}
+\RequirePackage{mathptmx}
+\RequirePackage{helvet}     
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Page style 
+\setlength{\textheight}{24cm}%{9in}
+\setlength{\textwidth}{17.6cm}%{6.5in}
+\setlength{\oddsidemargin}{-0.5cm}
+\setlength{\evensidemargin}{-0.5cm}
+\setlength{\topmargin}{-1.3cm}	    
+\setlength{\headheight}{0.54cm}
+\setlength{\headsep}{0.2cm}
+
+%% Column style
+\setlength{\columnsep}{1.27cm}
+
+\hyphenpenalty1000000
+
+%% Paragraph style
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+%% Section header style
+\setcounter{secnumdepth}{0}     
+
+%% Modifying maketitle
+\renewcommand{\@maketitle}{%
+    \hfill\parbox[t][1cm][c]{2.85cm}{%
+        \includegraphics[width=2.85cm, height=1.775cm, bb = 0 0 107 66]{sbgf_logo.jpg}
+    }\\[10mm]%
+    \raggedright\normalfont\fontsize{12}{14pt}\fontseries{b}\selectfont\@title \\[0.2ex]%
+    \normalfont\fontsize{9}{14pt}\selectfont\@author\vspace{2.75ex}
+}%
+
+%% Page style parameters
+%\setlength{\headrulewidth}{0pt}
+\newcommand{\headauthor}[1]{\newcommand{\headauthorname}{#1}}
+\newcommand{\headtitle}[1]{\newcommand{\headauthortitle}{#1}}
+
+%% Variables that define the congress (name, location, date, etc)
+%% By Rodrigo Portugal (02/apr/2007)
+\newcommand{\congressordinal}{13\raisebox{2.5pt}{\fontsize{4}{6pt}\selectfont th} }
+\newcommand{\congressedition}{VI}
+\newcommand{\congressname}{Simp\'{o}sio Brasileiro de Geof\'{i}sica}
+\newcommand{\congressyear}{2014}
+\newcommand{\congressdate}{14 a 16 de outubro}
+\newcommand{\congresslocation}{Porto Alegre}
+
+%% Headers and Footers
+\pagestyle{fancyplain}
+\lhead[]{}
+\rhead[\fancyplain{}{\thepage}]{\fancyplain{}{\thepage}}
+\lfoot[]{}
+\rfoot[]{}
+\cfoot[%
+       \fancyplain{\small\congressedition~\congressname}%
+                  {\small\congressedition~\congressname}%
+      ]
+      {%
+        \fancyplain{\small\congressedition~\congressname}%
+                   {\small\congressedition~\congressname}%
+      }
+\chead[%
+       \fancyplain%
+           {}%
+           {\small\scshape\headauthortitle}%
+      ]
+      {%
+        \fancyplain%
+            {}%
+            {\small\scshape\headauthorname}%
+      }
+
+%\pagestyle{fancy}
+
+%% Redefine \section
+\renewcommand{\section}{\@startsection%
+  {section}%
+  {1}%
+  {0mm}%
+  {0pt}%
+  {1pt}%
+  {\normalsize\sffamily\bfseries}%
+}
+
+%% Redefine \subsection
+\renewcommand{\subsection}{\@startsection%
+  {section}%
+  {2}%
+  {0mm}%
+  {0pt}%
+  {1pt}%
+  {\normalsize\sffamily\itshape}%
+}
+
+%Redefine \caption
+%\newsavebox{\tempbox}
+%\renewcommand{\@makecaption}[2]{%
+%     \vspace{10pt}\sbox{\tempbox}{#1: #2}%
+%     \ifthenelse{\lengthtest{\wd\tempbox > \linewidth}%
+%        { #1: #2\par}%
+%        {\begin{center}#1: #2\end{center}}%
+%        }%
+%     }
+
+%% Global command to adapt the size of the font
+\renewcommand{\normalsize}{\fontsize{9}{10.5pt}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The package natbib provides excelent format citations.
+% It implements the \cite command with variations. The variations are
+% described in natbib.dtx file (LaTeX it using "latex natbib.dtx")
+% This file is in the natbib.tar
+\usepackage[round]{natbib}
+\bibliographystyle{seg}	
+
+
+\AtBeginDocument{
+\thispagestyle{empty}
+}
+
+%% Redefine global font to sans serif (ARIAL) 
+%\DeclareFontFamily{OT1}{phv}{}
+%\DeclareFontShape{OT1}{phv}{m}{n}{ <9> <12> <15> phvro }{}
+\renewcommand{\familydefault}{phv}
+%\renewcommand{\seriesdefault}{c}
+%\renewcommand{\rmdefault}{phv}
+
+\renewenvironment{abstract}%
+  {
+  \noindent
+  \begin{minipage}{8.16cm}
+  \normalfont\fontsize{6}{7pt}\selectfont
+  \vspace*{7pt}
+  \noindent
+  Copyright 2014, SBGf - Sociedade Brasileira de Geof\'{\i}sica.
+  \\[2mm]
+  Este texto foi preparado para a apresenta\c{c}\~{a}o no VI Simp\'{o}sio Brasileiro de Geof\'{i}sica, Porto Alegre, 14 a 16 de outubro de 2014. Seu conte\'{u}do foi revisado pelo Comit\^{e} T\'{e}cnico do VI SimBGf,  mas n\~{a}o necessariamente representa a opini\~{a}o da SBGf ou de seus associados. \'{E} proibida a reprodu\c{c}\~{a}o total ou parcial deste material para prop\'{e}sitos comerciais sem pr\'{e}via autoriza\c{c} \~{a}o da SBGf.
+  \end{minipage}
+  \vspace*{4pt}
+  \hrule
+  \section*{\abstractname}
+  \bfseries
+  }
+  {\par}
