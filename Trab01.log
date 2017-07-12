@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.4.25)  11 JUL 2017 18:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.4.25)  12 JUL 2017 20:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1187,41 +1187,132 @@ Package babel Info: Redefining portuges shorthand "|
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
 l.208 
-       <./Imagens/Discretizacao1d.png>] (./Trab01.bbl
+       <./Imagens/Discretizacao1d.png>]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 246.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 246.
  [5pdfTeX warning (ext4): destination with the same identifier (name{figure.0.2
 }) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1 \begin{thebibliography}{}
-                              <./Imagens/DP.png>])
+l.246 \end{equation}
+                     <./Imagens/DP.png>]
+<Imagens/Trab01.jpg, id=127, 1445.4pt x 722.7pt>
+File: Imagens/Trab01.jpg Graphic file (type jpg)
+ <use Imagens/Trab01.jpg>
+Package pdftex.def Info: Imagens/Trab01.jpg used on input line 275.
+(pdftex.def)             Requested size: 505.89758pt x 252.94878pt.
+
+Overfull \hbox (22.20071pt too wide) in paragraph at lines 275--276
+ [][] 
+ []
+
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 274.
+(babel)             in language  on input line 279.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 274.
- [6
+(babel)             in language  on input line 279.
+[6pdfTeX warning (ext4): destination with the same identifier (name{table.0.1})
+ has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.279 
+      ]
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 304.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 304.
+ [7pdfTeX warning (ext4): destination with the same identifier (name{figure.0.3
+}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.304 
+       <./Imagens/Trab01.jpg>]
+<Imagens/Trab02.jpg, id=146, 1445.4pt x 722.7pt>
+File: Imagens/Trab02.jpg Graphic file (type jpg)
+ <use Imagens/Trab02.jpg>
+Package pdftex.def Info: Imagens/Trab02.jpg used on input line 309.
+(pdftex.def)             Requested size: 505.89758pt x 252.94878pt.
+
+Overfull \hbox (22.20071pt too wide) in paragraph at lines 309--310
+ [][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 319.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 319.
+[8pdfTeX warning (ext4): destination with the same identifier (name{table.0.2})
+ has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.319 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+0.4}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.319 
+       <./Imagens/Trab02.jpg>]
+<Imagens/Trab03.jpg, id=153, 1445.4pt x 722.7pt>
+File: Imagens/Trab03.jpg Graphic file (type jpg)
+ <use Imagens/Trab03.jpg>
+Package pdftex.def Info: Imagens/Trab03.jpg used on input line 323.
+(pdftex.def)             Requested size: 505.89758pt x 252.94878pt.
+
+Overfull \hbox (22.20071pt too wide) in paragraph at lines 323--324
+ [][] 
+ []
+
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 349.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 349.
+[9pdfTeX warning (ext4): destination with the same identifier (name{figure.0.5}
+) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.349 
+      pdfTeX warning (ext4): destination with the same identifier (name{table.0
+.3}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.349 
+       <./Imagens/Trab03.jpg>] (./Trab01.bbl
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 1.
+ [10])
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 361.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 361.
+ [11
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 274.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 274.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 361.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 361.
  (./Trab01.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 274.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 274.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 361.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 361.
 Package rerunfilecheck Info: File `Trab01.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 29615 strings out of 494315
- 591870 string characters out of 6163325
- 773383 words of memory out of 5000000
- 32436 multiletter control sequences out of 15000+600000
+ 29658 strings out of 494315
+ 592488 string characters out of 6163325
+ 775045 words of memory out of 5000000
+ 32461 multiletter control sequences out of 15000+600000
  12455 words of font info for 48 fonts, out of 8000000 for 9000
  374 hyphenation exceptions out of 8191
- 55i,8n,73p,10410b,670s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,10n,73p,10410b,670s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1242,10 +1333,10 @@ fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Trab01.pdf (6 pages, 215266 bytes).
+Output written on Trab01.pdf (11 pages, 506430 bytes).
 PDF statistics:
- 175 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
- 136 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 239 PDF objects out of 1000 (max. 8388607)
+ 183 compressed objects within 2 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 151 words of extra memory for PDF output out of 10000 (max. 10000000)
 

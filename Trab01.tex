@@ -216,53 +216,140 @@ f(x)=\sum^{\infty}_{n=0}\frac{1}{n!}\frac{d^{n}f(x)}{dx^{n}|_{x=x_{0}}}(x-x_{0})
 
 Onde a variável $x$ pode ser considerada tanto uma variação temporal quanto espacial.
 
+Para obter-se o operador diferença finita progressiva expande-se em diferentes pontos ao entorno de $x_{i}$, que é o ponto discreto na malha unidimensional, e $\Delta x_{i}$ representa o espaçamento da malha \citep{Bartolo2010}. Desta forma temos a Eq. \ref{taylor expandida}.
+
+\begin{equation}
+f(x_{i+1})=f(x_{i}) + \frac{\Delta x}{1!}\frac{df(x_{i})}{dx}+\frac{\Delta x^{2}}{2!}\frac{d^{2}f(x_{i})}{dx^{2}}+\frac{\Delta x^{3}}{3!}\frac{d^{3}f(x_{i})}{dx^{3}}+\frac{\Delta x^{4}}{4!}\frac{d^{4}f(x_{i})}{dx^{4}}+...
+\label{taylor expandida}
+\end{equation}
+
+Subtraíndo-se o $f(x_{i})$ de $f(x_{i}+1)$, truncando-se o primeiro termo da série e isolando a derivada primeira, obtemos a derivada primeira, Eq \ref{taylor truncada}.
+
+\begin{equation}
+\frac{df(x_{i})}{dx} = \frac{f(x_{i+1}) - f(x_{i})}{\Delta x}
+\label{taylor truncada}
+\end{equation}
 
 
+Seguindo a mesma linha de raciocício ao truncarmos diferentes termos da expansão em série de Taylor obtemos as derivadas de ordens superiores. Para o caso específico da problemática da difusão de calor precisamos da derivada segunda que é fornecida pela Eq. \ref{taylor truncada 2}. 
 
+\begin{equation}
+\frac{d^{2}f(x_{i})}{dx^{2}} = \frac{f(x_{i+1}) - f(x_{i}) + f(x_{i-1})}{\Delta x^{2}}
+\label{taylor truncada 2}
+\end{equation}
 
+Aplicando as Eq. \ref{taylor truncada} e a Eq. \ref{taylor truncada 2} na Eq. \ref{calor4}, obtemos a solução explícita da equação de calor por diferenças finitas, Eq.\ref{explicita}.
 
+\begin{equation}
+T^{l+1}_{i}=T^{l}_{i}+\lambda (T^{l}_{i+1}-2T^{l}_{i}+T^{l}_{i-1})
+\label{explicita}
+\end{equation}
 
 
 \section*{Resultados}
 \subsection*{Caso I}
+Reproduziu-se o exemplo mostrado onde uma barra é discretizada com $6$ pontos, Fig \ref{Discretizacao}. Rodando tempo suficiente para encontrar a solução de equilíbrio. O parâmetros utilizados foram os mesmos do exemplo $2.1$ das notas de aula, que podem ser vistos na Tab. \ref{casoI}.
+
+
+
+\begin{table}[H]
+\centering
+\caption{Dados de entrada do programa Trab01.f95}
+\label{casoI}
+\begin{tabular}{@{}llllllllll@{}}
+\toprule
+Parâmetros do modelo                &   Caso I     		\\ \midrule
+Dimensão da barra ($x$) 		    &   10.0     			\\
+Condutividade térmica ($k$) 	    &    0.835           	\\
+Discretizacao temporal ($\Delta t$) &    0.1    			\\
+Número de pontos na barra ($np$)    &     6         		\\
+Número de iterações ($Lt$)		    &     5000   			\\
+ \bottomrule
+\end{tabular}
+\end{table}
+
+Os gráficos, na Fig. \ref{ResultadoI}, mostram o resultado do experimento I para um total de $5000$ iterações.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{Imagens/Trab01.jpg}
+\caption{Os pontos em azul claro, próximos do eixo $y=0$, representam os valores de temperatura na primeira iteração do tempo. Os pontos em verde escuro representam a iteração de número $10$. Pontos em amarelo a iteração $50$. Pontos em azul escuro a iteração $100$. Pontos em verde a iteração $200$. Em roxo a iteração $400$. Em preto, próximo ao vermelho a iteração $800$. E em vermelho a iteração $1000$. }
+\label{ResultadoI}
+\end{figure}
+
+Os pontos em vermelho, na Fig. \ref{ResultadoI}, apontam a solução de equilíbrio. 
 
 \subsection*{Caso II}
 
+O caso de estudo II aumentou-se o número de pontos na direção espacial $x$, diminuindo o espaçamento $\Delta x$, mantendo os demais parâmetros físicos iguais ao caso de estudo anterior. O intervalo de tempo $\Delta t$ foi modificado respeitando-se o critério de estabilidade numérica, utilizando um $\lambda = 1/2$.
+
+A Tab. \ref{casoII} apresenta os valores de entrada para o modelo experimental 2 mantendo em vista o critério de estabilidade.
+
+
+\begin{table}[H]
+\centering
+\caption{Dados de entrada do programa Trab01.f95}
+\label{casoII}
+\begin{tabular}{@{}llllllllll@{}}
+\toprule
+Parâmetros do modelo                &   Caso II     		\\ \midrule
+Dimensão da barra ($x$) 		    &    10.0     			\\
+Condutividade térmica ($k$) 	    &    0.835           	\\
+Discretizacao temporal ($\Delta t$) &    0.01    			\\
+Número de pontos na barra ($np$)    &     50        		\\
+Número de iterações ($Lt$)		    &    5000   			\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Os resultados obtidos para o caso 2 estão apresentados na Fig. \ref{ResultadoII}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{Imagens/Trab02.jpg}
+\caption{Os pontos em azul claro, próximos do eixo $y=0$, representam os valores de temperatura na primeira iteração do tempo. Os pontos em verde escuro representam a iteração de número $10$. Pontos em amarelo a iteração $50$. Pontos em azul escuro a iteração $100$. Pontos em verde a iteração $200$. Em roxo a iteração $400$. Em preto, próximo ao azul claro a iteração $800$. Em azul claro a iteração $1000$. Em amarelo a iteração $2500$. E em vermelho a iteração $5000$.}
+\label{ResultadoII}
+\end{figure}
+
+Nota-se que para o caso II a estabilidade térmica foi alcançada aumentando-se o número de iterações.
+
+\subsection*{Caso III}
+
+O caso experimental terceiro é uma comparação entre os resultados obtidos nos casos I e II, anteriores, com uma solução analítica de uma reta que passa pelos pontos de temperatura $100$°C e $50$ °C, que represenam as condições de contorno de Dirichlet. Os resultados deste experimento são apresentados na Fig. \ref{ResultadoIII}.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{Imagens/Trab03.jpg}
+\caption{Os pontos em amarelo representam o resultado para estabilidade térmica, no caso I. Os pontos em verde apresentam o resultado para a estabilidade térmica no caso II. E os pontos em vermelho apresentam o reultado da estabilidade térmica calulada analiticamente.}
+\label{ResultadoIII}
+\end{figure}
+
+Amostrou-se o ponto 4 da barra e calculou-se o erro relativo à solução analítica. Os resultados estão apresentados na Tab. \ref{casoIII}.
+
+
+\begin{table}[H]
+\centering
+\caption{Erros relativos em uma amostragem pontual.}
+\label{casoIII}
+\begin{tabular}{@{}llllllllll@{}}
+\toprule
+Erros relativos (°C)         &   Ponto 4     		\\ \midrule
+Caso I		   				  &    20.0    			\\
+Caso II	    				  &    1.0           	\\
+
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 \section*{Discussão dos resultados}
 
+E notável que no caso I o tempo de máquina relativo é mais baixo comparado caso II, em outras palavras chega-se à situação de estabilidade, ou seja o ponto de equilíbrio térmico mais rapidamente (vide Tab. \ref{casoI}), na milésima iteração. Isso se deve em parte pela maneira como foi feita a discretização da barra, no primeiro experimento, aonde foram utilizado somente $6$ pontos (vide Fig. \ref{ResultadoI}). 
 
-%exemplo de tabela
-%\begin{table}[]
-%\centering
-%\caption{Compilação de Perfis usados na inferência de litologia.}
-%\label{rock-properties}
-%\begin{tabular}{@{}llllllllll@{}}
-%\toprule
-%Rocha         & Densidade ($g/cm^{3}$) & Raios-Gama ($Ci/g$)& Potencial-Espontâneo ($mV$)&   \\ \midrule
-%Conglomerado &     $2,50$  &       ---        &    ---        &      \\
-%Arenito  &    $2,35$      &       $2,00\leftrightarrow4,00$       &     ---       &      \\
-%Folhelho &   $2,40$       &      ---        &      ---      &    \\
-%Argilito &     $2,55$   &          ---     &       ---     &     \\
-%Siltito  &      $2,21$    &          ---     &       ---     &   \\
-%Dolomita &     $2,70$    &        $8,00$       &   ---         &       \\
-%Marga  &    $2,50$     &         ---      &    ---        &     \\
-%Basalto  &     $2,99$    &          $0,50$     &    ---       &      \\
-%Diabásio &    $2,90$    &         ---      &       ---     &     \\
-%Lava &     $2,61$    &      $0,33$         &      ---      &      \\
-%Granito &    $2,64$      &       $0,70\leftrightarrow4,80$        &      ---      &      \\
-%Gabro &    $3,03$     &       ---        &     ---       &       \\
-%Peridotito &   $3,15$    &      ---         &     ---       &      \\
-%Quartzito &    $2,60$    &        $5,00$      &     ---       &    \\
-%Xisto &   $2,64$    &         ---      &      ---      &    \\
-%Gnaisse &    $2,80$     &      ---         &    ---        &        \\
-%Serpentinito &    $2,78$     &   ---            &   ---     &        \\
-%Anfibolito &  $2,96$       &          ---     &       ---     &        \\
-%Eclogito &  $3,37$    &       ---        &      ---      &    \\
-%Mármore &   $2,75$       &      ---         &     ---       &      \\ \bottomrule
-%\end{tabular}
-%\end{table}
+Já no caso II, a discretização foi alterada aumentando-se o número de pontos na barra para $50$ pontos, e mantendo-se o seu comprimento constante (vide \ref{casoII}). Nessa situação experimental, para atender a situação de estabilidade térmica, foi imperativo o aumento do número de iterações para $5000$ (vide Fig. \ref{casoII}). Isto implica, diretamente em um aumento do custo computacional.
+
+O caso III apresenta a comparação dos dois resultados de estabilidade térmica anteriores com o cálculo da solução analítica (vide Fig. \ref{ResultadoIII}). É possível perceber que o erro relativo é muito maior no caso I devido a discretização adotada. No caso II, embora o aumento da discretização tenha causado um aumento no custo computacional ela propicionou uma melhora considerável no reultado da estabilidade térmica (vide \ref{casoIII}), diminuindo o erro relativo.  
 
 
 

@@ -16,7 +16,7 @@ REAL(KIND=4)::x, dX, dt, lambda, k, inicial, final, custocomputacional
 REAL(KIND=4),ALLOCATABLE, DIMENSION(:):: aux
 REAL(KIND=4), ALLOCATABLE, DIMENSION(:,:):: T
 
-!                           CASO I
+!                           EXPERIMENTO
 !
 ! Definição da malha unidimensional de 6 pontos geometricamente variando no tempo:
 !
@@ -55,7 +55,7 @@ READ(2,*) k     ! condutividade termica do material
 ALLOCATE( T(0:Lt,0:np-1), aux(0:np-1) )
    
 ! Condições de valor inicial da barra de alumínio:
-dX =  x / ( REAL(np,KIND=4) - 1.0 ) ! conversao de inteiro em real 4
+dX =  x / ( REAL(np,KIND=4) - 1.0 ) ! conversao de inteiro em real 4 somente para o cálculo de dx
                                     ! diferenca entre numero de passos e numero de pontos!!!!!
 !k=0.835
 !lambda=0.020875
@@ -74,24 +74,24 @@ DO l=0,Lt       ! loop temporal
     T(l+1,i)=T(l,i)+lambda*(T(l,i+1)-2.0*T(l,i)+T(l,i-1))
   ENDDO
 ENDDO
-! vetor auxiliar para dimensionar o arquivo de saida:
+
+
+!Registra os resultados de Temperatura em um arquivo *txt
+
+! Criando um vetor auxiliar para dimensionar o arquivo de saida:
 aux(0:np-1) = 0.0
 DO i=0,np-2
   aux(i+1) = aux(i) + dX
 ENDDO
-
-!Registra os resultados de Temperatura em um arquivo *txt
 
  OPEN(UNIT=1,FILE='Trab01b2.txt')
   WRITE(1,*) aux
   DO l=1,Lt
     WRITE(1,*)T(l,:)
   ENDDO
-!  WRITE(1,*)'++++++++++++++ INFORMAÇÕES ADICIONAIS +++++++++++++'
-!  WRITE(1,*)"Tempo de Máquina =",custocomputacional, 'Segundos'
-!  WRITE(1,*),T
 
- !Cálculo do Custo Computacional
+
+!Cálculo do Custo Computacional
 CALL cpu_time(final)
 custocomputacional=final-inicial
 PRINT*, 'Custo Computacional=',custocomputacional, 'segundos'
