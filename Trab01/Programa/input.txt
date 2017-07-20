@@ -1,0 +1,5 @@
+10.0     # dimensao da barra em cm (x);
+20        # numero de pontos na barra (np);
+500      # loop temporal (Lt);
+0.10     # discretizacao temporal (dt);
+0.835    # condutividade termica (k)
