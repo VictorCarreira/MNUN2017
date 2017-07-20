@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.4.25)  17 JUL 2017 19:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.4.25)  20 JUL 2017 12:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1129,10 +1129,14 @@ LaTeX Info: Redefining \nameref on input line 71.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Imagens/logoON.jpg, id=34, 163.9215pt x 62.7435pt>
-File: Imagens/logoON.jpg Graphic file (type jpg)
- <use Imagens/logoON.jpg>
-Package pdftex.def Info: Imagens/logoON.jpg used on input line 77.
+
+</home/carreira/Documentos/MNUN2017/Imagens/logoON.jpg, id=34, 163.9215pt x 62.
+7435pt>
+File: /home/carreira/Documentos/MNUN2017/Imagens/logoON.jpg Graphic file (type 
+jpg)
+ <use /home/carreira/Documentos/MNUN2017/Imagens/logoON.jpg>
+Package pdftex.def Info: /home/carreira/Documentos/MNUN2017/Imagens/logoON.jpg 
+used on input line 77.
 (pdftex.def)             Requested size: 213.0979pt x 81.56651pt.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
@@ -1154,18 +1158,22 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 113.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Imagens/logoON.jpg>]
-<Imagens/CPcubo.png, id=47, 352.79805pt x 372.6723pt>
-File: Imagens/CPcubo.png Graphic file (type png)
- <use Imagens/CPcubo.png>
-Package pdftex.def Info: Imagens/CPcubo.png used on input line 157.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </home/carreira/Documentos/
+MNUN2017/Imagens/logoON.jpg>]
+</home/carreira/Documentos/MNUN2017/Imagens/CPcubo.png, id=47, 352.79805pt x 37
+2.6723pt>
+File: /home/carreira/Documentos/MNUN2017/Imagens/CPcubo.png Graphic file (type 
+png)
+ <use /home/carreira/Documentos/MNUN2017/Imagens/CPcubo.png>
+Package pdftex.def Info: /home/carreira/Documentos/MNUN2017/Imagens/CPcubo.png 
+used on input line 157.
 (pdftex.def)             Requested size: 141.11671pt x 149.06627pt.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 161.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 161.
-
-[2] (./Trab02.bbl
+ [2]
+(./Trab02.bbl
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining portuges shorthand "|
@@ -1176,7 +1184,8 @@ Package babel Info: Redefining portuges shorthand "|
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
 l.1 \begin{thebibliography}{}
-                              <./Imagens/CPcubo.png>]
+                              </home/carreira/Documentos/MNUN2017/Imagens/CPcub
+o.png>]
 
 Package natbib Warning: Empty `thebibliography' environment on input line 3.
 
@@ -1198,7 +1207,7 @@ Package rerunfilecheck Info: File `Trab02.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  29580 strings out of 494315
- 591381 string characters out of 6163325
+ 591696 string characters out of 6163325
  769950 words of memory out of 5000000
  32416 multiletter control sequences out of 15000+600000
  12455 words of font info for 48 fonts, out of 8000000 for 9000
