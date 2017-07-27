@@ -13,7 +13,7 @@
 # ======================================================================
 
 # The compiler
-FC = gfortran
+FC = f95
 # flags for debugging or for maximum performance, comment as necessary
 #FCFLAGS = -g -fbounds-check
 FCFLAGS = -O2
@@ -22,10 +22,10 @@ FCFLAGS += -I/usr/include
 
 # libraries needed for linking, unused in the examples
 #LDFLAGS = -li_need_this_lib
-LDFLAGS = -L$HOME/libf77/$ARCH -llapack -lblas
+#LDFLAGS = -L$HOME/libf77/$ARCH -llapack -lblas
 
 # List of executables to be built within the package
-PROGRAMS = sistema
+PROGRAMS = Main
 
 # "make" builds all
 all: $(PROGRAMS)
@@ -95,8 +95,8 @@ all: $(PROGRAMS)
 # must also be linked in when building the executable, so the
 # dependency on mod.o is added also for prog4, as in the external
 # procedure case (prog3):
-sistema.o: module.o
-sistema: modulo.o subprogramas.o
+Main.o: Unidimensional.o
+Main: Unidimensional.o
 
 #$part5
 # Putting it all together: when an executable is built from many
@@ -123,10 +123,10 @@ sistema: modulo.o subprogramas.o
 # General rules for building prog.o from prog.f90 or prog.F90; $< is
 # used in order to list only the first prerequisite (the source file)
 # and not the additional prerequisites such as module or include files
-%.o: %.f90
+%.o: %.f95
 	$(FC) $(FCFLAGS) -c $<
 
-%.o: %.F90
+%.o: %.F95
 	$(FC) $(FCFLAGS) -c $<
 
 # Utility targets

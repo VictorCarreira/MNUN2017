@@ -11,15 +11,15 @@ USE Unidimensional
 
 ! Declaração de Variáveis
 IMPLICIT NONE
-INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
-INTEGER, PARAMETER:: DBL = SELECTED_REAL_KIND(p=1, r=200)
-INTEGER(KIND=SGL)::i, l, np, Lt ! Lt= loop temporal
-REAL(KIND=DBL)::x, dx, dt, lambda, k, inicial, final, custocomputacional
+!INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
+!INTEGER, PARAMETER:: DBL = SELECTED_REAL_KIND(p=14, r=200)
+!INTEGER::i!, l, np, Lt ! Lt= loop temporal
+!REAL(KIND=DBL)::x, dx, dt, lambda, k, inicial, final, custocomputacional
 !REAL(KIND=4),DIMENSION(0:5000,0:5):: T !A expressão "0:" inicia o contador a partir do zero!!! Caso
 !contrário ele se inicia a partir do 1!!!
-REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:):: aux
+!REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:):: aux
 !REAL(KIND=DBL), ALLOCATABLE, DIMENSION(:,:):: T
-REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:)::T1,T2
+!REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:)::T1,T2
 
 !                           EXPERIMENTO
 !
@@ -85,7 +85,7 @@ T1(0)=100.0
 T1(np-1)=50.0
 
 T2(0)=100.0
-T1(np-1)=50.0
+T2(np-1)=50.0
 
 
 ! Criando um vetor auxiliar para dimensionar o arquivo de saida:
@@ -97,7 +97,7 @@ ENDDO
 OPEN(UNIT=1,FILE='output.txt')! arquivo de saida
 WRITE(1,*) aux
 
-CALL DF
+CALL DF (lp,nt,lambda,T1,T2)
 
 !Cáculo Numérico por Diferenças Finitas progressivas de maneira explícita
 !DO l=0,Lt       ! loop temporal
