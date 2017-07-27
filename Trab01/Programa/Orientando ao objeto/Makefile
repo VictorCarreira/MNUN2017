@@ -25,7 +25,8 @@ FCFLAGS += -I/usr/include
 #LDFLAGS = -L$HOME/libf77/$ARCH -llapack -lblas
 
 # List of executables to be built within the package
-PROGRAMS = Main
+PROGRAMS = Main #coloque aqui o nome do seu programa principal. Ele dará o no-
+				#me para o executável
 
 # "make" builds all
 all: $(PROGRAMS)
