@@ -1,5 +1,7 @@
-10.0     # dimensao da barra em cm (x);
-20        # numero de pontos na barra (np);
+10.0     # dimensao da placa em cm (x);
+10.0     # dimensao da placa em cm (z);
+20        # numero de pontos horizontais na placa (nx);
+20        # numero de pontos verticais na placa (nz);
 500      # loop temporal (Lt);
 0.10     # discretizacao temporal (dt);
 0.835    # condutividade termica (k)
