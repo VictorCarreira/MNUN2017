@@ -4,36 +4,50 @@ PROGRAM calor2d
 !Professor: Leandro Di Bartolo
 !Este programa visa cumprir os requisitos da disciplina MNUM,
 !tópico 2.1- formulação explícita.
+!O problema do calor 2D
 !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ! Declaração de Variáveis
 IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
-INTEGER, PARAMETER:: DBL = SELECTED_REAL_KIND(p=1, r=200)
-INTEGER(KIND=SGL)::i, l, j, nx, nz, Lt ! Lt= loop temporal
-REAL(KIND=DBL)::x, dx, dt, k, inicial, final, custocomputacional
-!REAL(KIND=4),DIMENSION(0:5000,0:5):: T !A expressão "0:" inicia o contador a partir do zero!!! Caso
-!contrário ele se inicia a partir do 1!!!
-REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:):: aux
-!REAL(KIND=DBL), ALLOCATABLE, DIMENSION(:,:):: T
-REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:,:)::T1,T2, alfa
+INTEGER(KIND=SGL)::i, j, l, nx, ny, nz ! Contadores(i,j,l) e Parametros numéricos[nx(dimensão), ny(dimensão), nz(tempo real devido a instabilidade numérica) e nl(é um índice auxiliar de tempo inteiro)]
+INTEGER(KIND=SGL)::nsnap,csnap=0!Número de snapshots para impressão e o contador de snapshots.
+INTEGER(KIND=SGL)::dx,dy !Parâmetros numéricos distância nos três eixos.
+REAL(KIND=SGL)::x, y, z, dz, Tesq, Tdir, Tinf, Tsup, inicial, final, custocomputacional
+REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:)::T1,T2, alfa !Vetores com as temperaturas
+CHARACTER(LEN=3)::num_snap!Contador de snaps para impressão
 
 !                           EXPERIMENTO
 !
-! Definição da malha unidimensional de 6 pontos geometricamente variando no tempo:
+! Definição do Stencil bidimensional de 6x6 pontos variando somente no tempo futuro:
 !
-!l=n|======0======0======0======0=======|
 !
-!l=3|======0======0======0======0=======|
-!
-!l=2|======0======0======0======0=======|
-!         /|\    /|\    /|\    /|\
-!l=1|======0======0======0======0=======|
-!  i=0    i=1    i=2    i=3    i=4     i=5
-!
-!(T0=100°C)                         (T5=50°C) => Condição de contorno
-!
-!---|-------|------|------|------|------|------|-------> x (Comprimento, cm)
+!  y(cm)
+!   ^    (T0=100°C)                         (T5=50°C) => Condição de contorno
+!   |       |-----------------------------------|
+!   |       |       l=5                         |
+!   |       |       /                           |
+!  12.0  j=5|------0------0------0------0-------|
+!   |       |      l=4                          |
+!   |       |       /                           |
+!  10.0  j=4|------0------0------0------0-------|   
+!   |       |       l=3                         |
+!   |       |       /                           | 
+!  8.0   j=3|------0------0------0------0-------|
+!   |       |       l=2                         |
+!   |       |       /                           |
+!  6.0   j=2|------0------0------0------0-------|
+!   |       |       l=1                         |
+!   |       |       /                           |
+!  4.0   j=1|------0------0------0------0-------|
+!   |       |      l=0                          |
+!   |       |       /                           | 
+!  2.0   j=0|------0------0------0------0-------|
+!   |      i=0    i=1    i=2    i=3    i=4     i=5
+!   |   /   |-----------------------------------|
+!   |  /z=(tempo)  
+!   | /
+!---|/-------|------|------|------|------|------|-------> x (cm)
 !   0      2.0    4.0    6.0    8.0    10.0   12.0
 !
 ! Variáveis do problema:
@@ -49,77 +63,86 @@ CALL cpu_time(inicial)
 ! Leitura do input file:
 OPEN(UNIT=2,FILE='input.txt')
 READ(2,*) x     ! comprimento da placa em x (cm)
-READ(2,*) nx    ! discretizacao da placa em x
-READ(2,*) z     ! comprimento da placa em z (cm)
-READ(2,*) nz    ! discretizacao da barra em z
-READ(2,*) Lt    ! Iteracoes temporais
-READ(2,*) dt    ! discretizacao temporal (tempo fisico do experimento)
-READ(2,*) k     ! condutividade termica do material
-
-!ALLOCATE( T(0:Lt,0:np-1), aux(0:np-1) )
-ALLOCATE(T1(0:nx-1,0:nz-1), T2(0:nx-1,0:nz-1), alfa(0:nx-1,0:nz-1)) !np-1 indica o número de pontos da barra menos o 0 inicial que eu comecei a contagem
+READ(2,*) dx    ! discretizacao da placa em x
+READ(2,*) y     ! comprimento da placa em y (cm)
+READ(2,*) dy    ! discretizacao da barra em y
+READ(2,*) z     ! Iteracoes temporais
+READ(2,*) dz    ! discretizacao temporal (tempo fisico do experimento)
+READ(2,*) alfa  ! difusividade termica do material
+READ(2,*) Tesq  ! temperatura na borda esquerda (°C)
+READ(2,*) Tdir  ! temperatura na borda direita (°C)
+READ(2,*) Tsup  ! temperatura na borda superior (°C)
+READ(2,*) Tinf  ! temperatura na borda inferior (°C)
+READ(2,*) nsnap ! número de snapshots
 
 ! Condições de valor inicial da barra de alumínio:
- dx =  x / ( REAL(np,KIND=DBL) - 1.0 ) ! conversao de inteiro em real 4 somente para o cálculo de dx
-                                     ! diferenca entre numero de passos e numero de pontos!!!!!
+nx =  INT(x/dx)+1 ! conversao de inteiro em real 4 somente para o cálculo de dx ! diferenca entre numero de passos e numero de pontos!!!!!
+ny =  INT(y/dy)+1 
+nz =  INT(z/dz)+1
+
+
+ALLOCATE(T1(ny,nx), T2(ny,nx), alfa(ny,nx)) !n...-1 indica o número de pontos da barra menos o 0 inicial que eu comecei a contagem na direção x ou y. E !A expressão "0:" inicia o contador a partir do zero!!! Caso contrário ele se inicia a partir do 1!!!
+
+
 
 
 !Definindo o valor inicial:
-!T = 0.0
 T1=0.0 ! Zerando as variáveis
 T2=0.0
 
 
 !Condições de Contorno de Dirichlet!
-!T(0:Lt,0)    = 100.0
-!T(0:Lt,np-1) = 50.0
 
-T1(:,0)=100.0
-T1(:,np-1)=50.0
+T1(:,1)=Tesq
+T1(:,nx)=Tdir
+T1(1,:)=Tsup
+T1(ny,:)=Tinf
+
+T2=T1 !As condições de contorno não variam tanto no tempo presente quanto no tempo futuro.
 
 
-T2(:,0)=100.0
-T1(:,np-1)=50.0
+!Difusividade Térmica ao longo da placa
+alfa=alfa*dz/(dx*dy)
 
-alfa=0.8
-alfa=alfa*dt/(h**2)
-! Criando um vetor auxiliar para dimensionar o arquivo de saida:
-aux(0:np-1) = 0.0
-DO i=0,np-2
-  aux(i+1) = aux(i) + dX
-ENDDO
-!Registra os resultados de Temperatura em um arquivo *txt
-OPEN(UNIT=1,FILE='output.txt')! arquivo de saida
-WRITE(1,*) aux
+
 
 !Cáculo Numérico por Diferenças Finitas progressivas de maneira explícita
-DO l=0,Lt       ! loop temporal
-  DO i=1,np-2   ! loop só do miolo da malha (0,np-1) são as bordas
-    DO j,nz-1   ! loop na segunda dimensão
-    !T2(i,j)=T1(i,j)+lambda*(T1(i+1,j)-2.0*T1(i,j)+T1(i-1,j)+ T1(i,j+1)-2.0*T1(i,j)+T1(i,j-1))
+DO l=1,nz ! laço temporal (A marcha no tempo)
+  IF(MOD(l,50)==0) WRITE(*,*)'passo',l
+  DO j=2,nx-1   ! laço só do miolo da malha (2,nx-1) são as bordas. O cálculo das DFS (espaço).
+    DO i=2,ny-1   ! laço só do miolo da malha (2,nz-1) são as bordas. O cálculo das DFS (espaço).
     T2(i,j)=T1(i,j)+alfa(i,j)*(T1(i+1,j)-2.0*T1(i,j)+T1(i-1,j)+ T1(i,j+1)-2.0*T1(i,j)+T1(i,j-1))
     ENDDO
   ENDDO
-  T1=T2! Atualização da variável temperatura. Mapeia a variação temporal
-  WRITE(1,*) T2 !Registra as temperaturas ao longo de lt instantes de tempo
+  CALL Snap() 
+  T1(2:ny-1,2:nx-1)=T2(2:ny-1,2:nx-1)! Atualização da variável temperatura. Mapeia a variação temporal
 ENDDO
+WRITE(*,*)'Final da marcha temporal'
 
+DEALLOCATE(T1,T2,alfa) 
 
-
-!colocar o binario
-!e criar os snaps
-
- !OPEN(UNIT=1,FILE='Trab01b2.txt')
-!  WRITE(1,*) aux
-  !DO l=1,Lt
-  !  WRITE(1,*)T(l,:)
-  !ENDDO
-
+PRINT*,'Tamanho de T2',SIZE(T2)
 
 !Cálculo do Custo Computacional
 CALL cpu_time(final)
 custocomputacional=final-inicial
 PRINT*, 'Custo Computacional=',custocomputacional, 'segundos'
 PRINT*,'*********************** FIM ***************************'
+
+
+
+CONTAINS 
+!Criando os snapshots e gerando o arquivo de saída
+SUBROUTINE Snap()
+IMPLICIT NONE
+IF(MOD(l,nsnap)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é uma intrínseca que devolve o resto de l na divisão por nsnap, ambos os argumentos sendo do mesmo tipo (l-INT(l/nsnap) * nsnap)
+  csnap=csnap+1
+  WRITE(num_snap,'(I3.3)')csnap
+  WRITE(*,*) 'Imprimindo snap', num_snap, '...'
+  OPEN(3,FILE='snap'//num_snap//'.bin',STATUS='replace', ACCESS='direct', FORM='unformatted', RECL=SGL*nx*ny)
+  WRITE(3,REC=1) ((T2(i,j),i=1,ny), j=1,nx)
+  CLOSE(3)
+ENDIF
+END SUBROUTINE Snap
 
 END PROGRAM calor2d
