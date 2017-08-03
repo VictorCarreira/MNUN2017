@@ -1,66 +1,103 @@
 PROGRAM Onda2D
 ! Declaração de Variáveis
 IMPLICIT NONE
-REAL, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
-REAL, PARAMETER:: DBL = SELECTED_REAL_KIND(p=14, r=200)
-INTEGER::i, j, k, h, Nx, Nz, Nt, x, z, n, t, t0, ! k = loop temporal
-REAL(KIND=DBL)::DeltaT, DeltaX, DeltaZ, rho, c, pi, a, fc, fcorte, alfa2, alfa4, beta, inicial, final, custocomputacional
-!REAL(KIND=DBL), ALLOCATABLE, DIMENSION(:,:):: P
-REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:,:,:)::P1, P2, P3
-REAL(KIND=DBL),ALLOCATABLE, DIMENSION(:,:)::S
-make
+INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
+INTEGER(KIND=SGL)::i, j, k, nx, nz, nt ! k = loop temporal
+REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, c, pi, a, fc, fcorte, alfa2, alfa4, beta, inicial, final, custocomputacional
+REAL(KIND=SGL)::  x, z, t, t0
+REAL(KIND=SGL), ALLOCATABLE, DIMENSION(:,:,:):: P
+!REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:)::P1, P2, Paux
+REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:,:)::S
+
 !INPUT
-Nx=10
-Nz=10
-Nt=10
+nx=10
+nz=10
+nt=10
 pi=3.1416
-n=10
-x=10
-z=10
-t=100
+x=10.0
+z=10.0
+t=100.0
+c=1500
 alfa2=5!segunda ordem no espaço
 alfa4=10!quarta ordem no espaço
 beta=4!segunda ordem no tempo
 
-DeltaX=x/Nx
-DeltaZ=z/Nz
-DeltaT=t/Nt
+DeltaX=x/nx
+DeltaZ=z/nz
+DeltaT=t/nt
 
-ALLOCATE(P1(Nx,Nz,Nt), P2(Nx,Nz,Nt), P3(Nx,Nz,Nt), S(Nx,Nt)) !Alocando as matrizes
+!ALLOCATE(P1(nx,nz), P2(nx,nz), Paux(nx,nz), S(nx,nt)) !Alocando as matrizes
+ALLOCATE(P(nx,nz,nt), S(nx,nz,nt))
 
 !Condição inicial
- P1(Nx,Nz,Nt=0)=0
- P2(Nx,Nz,Nt=0)=0
- P3(Nx,Nz,Nt=0)=0
+ !P1(nx,nz)=0
+ !P2(nx,nz)=0
+ P(nx,nz,nt)=0
+
  !P4(Nx,Nz,Nt=0)=0
 
 !Condição de contorno (Oneway):
 
 !Borda Direita
-DO k= 1,n !n=Nt??
-    DO i=1,Nx
-    P(i,j,k+1)= - (c(i,j)*DeltaT/DeltaX) * (P(i,j,k)-P(i-1,j,k)+P(i,j,k)
+DO k=1,nt
+    DO i=1,nx
+        P(i,j,k+1)= - (c(i,j)*DeltaT/DeltaX) * (P(i,j,k)-P(i-1,j,k)) +P(i,j,k)
+        !P2(i,j) = -(c(i,j)*DeltaT/DeltaX)*(P1(i,j)-P1(i-1,j)) + P1(i,j)
     ENDDO
 ENDDO
+
 
 !Borda Esquerda
-DO k= 1,n !n=Nt??
-    DO i=1,Nx
-    P(i,j,k+1)= + (c(i,j)*DeltaT/DeltaX) * (P(i,j,k)-P(i-1,j,k)+P(i,j,k)
+DO k=1,nt
+    DO i=1,nx
+        P(i,j,k+1)= - (c(i,j)*DeltaT/DeltaX) * (P(i,j,k)-P(i-1,j,k)) +P(i,j,k)
+        !P2(i,j)= + (c(i,j)*DeltaT/DeltaX) * (P1(i,j)-P1(i-1,j)) +P1(i,j)
     ENDDO
 ENDDO
+
 
 !Fundo
-DO k= 1,n !n=Nt??
-    DO j=1,Nz
-    P(i,j,k+1)= - (c(i,j)*DeltaT/DeltaZ) * (P(i,j,k)-P(i,j-1,k)+P(i,j,k)
+
+DO k=1,nt
+    DO j=1,nz
+        P(i,j,k+1)= - (c(i,j)*DeltaT/DeltaZ) * (P(i,j,k)-P(i,j-1,k)) +P(i,j,k)
+        !P2(i,j)= - (c(i,j)*DeltaT/DeltaZ) * (P1(i,j)-P1(i,j-1)) +P1(i,j)
     ENDDO
 ENDDO
 
+
 !Contição de Contorno (Cerjan):
+DO k=1,nt
+    DO j=1,nz
+        DO i=1, nx
+            P(i,j,k+1)=P(i,j,k)+DeltaT*P(i,j,k+1/2)
+            !P2(i,j)=P1(i,j)+DeltaT*Paux(i,j)
+        ENDDO
+    ENDDO
+ENDDO
 
 
+!Critério da Não-dispersão de segunda ordem:
+IF h .LE. (MIN(C)/alfa2*fcorte) THEN
+    PRINT*, 'Não-dispersa'
+ELSE
+    PRINT*,'Dispersa'
+END IF
 
+!Critério da Não-dispersão de quarta ordem:
+IF h .LE. (MIN(C)/alfa4*fcorte) THEN
+    PRINT*, 'Não-dispersa'
+ELSE
+    PRINT*,'Dispersa'
+ENDIF
+
+
+!Critério de Estabilidade:
+IF DeltaT .LE. (h/beta*MAX(c)) THEN
+    PRINT*,'ESTÁVEL'
+ELSE
+    PRINT*,'INSTÁVEL'
+ENDIF
 
 
 !Fonte
@@ -82,27 +119,6 @@ DO k=2,Nt
 ENDDO
 
 
-!Critério da Não-dispersão de segunda ordem:
-IF h .LE. (MIN(C)/alfa2*fcorte)
-    PRINT*, 'Não-dispersa'
-    THEN
-    PRINT*,'Dispersa'
-ENDIF
-
-!Critério da Não-dispersão de quarta ordem:
-IF h .LE. (MIN(C)/alfa4*fcorte)
-    PRINT*, 'Não-dispersa'
-    THEN
-    PRINT*,'Dispersa'
-ENDIF
-
-
-!Critério de Estabilidade:
-IF DeltaT .LE. (h/beta*MAX(c))
-    PRINT*,'ESTÁVEL'
-    THEN
-    PRINT*,'INSTÁVEL'
-ENDIF
 
 
 !OUTPUT
