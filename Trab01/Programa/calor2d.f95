@@ -30,9 +30,9 @@ CHARACTER(LEN=3)::num_snap!Contador de snaps para impressão
 !  12.0  j=5|------0------0------0------0-------|
 !   |       |      l=4                          |
 !   |       |       /                           |
-!  10.0  j=4|------0------0------0------0-------|   
+!  10.0  j=4|------0------0------0------0-------|
 !   |       |       l=3                         |
-!   |       |       /                           | 
+!   |       |       /                           |
 !  8.0   j=3|------0------0------0------0-------|
 !   |       |       l=2                         |
 !   |       |       /                           |
@@ -41,11 +41,11 @@ CHARACTER(LEN=3)::num_snap!Contador de snaps para impressão
 !   |       |       /                           |
 !  4.0   j=1|------0------0------0------0-------|
 !   |       |      l=0                          |
-!   |       |       /                           | 
+!   |       |       /                           |
 !  2.0   j=0|------0------0------0------0-------|
 !   |      i=0    i=1    i=2    i=3    i=4     i=5
 !   |   /   |-----------------------------------|
-!   |  /z=(tempo)  
+!   |  /z=(tempo)
 !   | /
 !---|/-------|------|------|------|------|------|-------> x (cm)
 !   0      2.0    4.0    6.0    8.0    10.0   12.0
@@ -63,9 +63,9 @@ CALL cpu_time(inicial)
 ! Leitura do input file:
 OPEN(UNIT=2,FILE='input.txt')
 READ(2,*) x     ! comprimento da placa em x (cm)
-READ(2,*) dx    ! discretizacao da placa em x
-READ(2,*) y     ! comprimento da placa em y (cm)
-READ(2,*) dy    ! discretizacao da barra em y
+READ(2,*) y     ! dimensao da placa em cm (y);
+READ(2,*) dx    ! subdivisoes horizontais na placa (dx);
+READ(2,*) dy    ! subdivisoes verticais na placa (dy);
 READ(2,*) z     ! Iteracoes temporais
 READ(2,*) dz    ! discretizacao temporal (tempo fisico do experimento)
 READ(2,*) alfa  ! difusividade termica do material
@@ -77,9 +77,11 @@ READ(2,*) nsnap ! número de snapshots
 
 ! Condições de valor inicial da barra de alumínio:
 nx =  INT(x/dx)+1 ! conversao de inteiro em real 4 somente para o cálculo de dx ! diferenca entre numero de passos e numero de pontos!!!!!
-ny =  INT(y/dy)+1 
+ny =  INT(y/dy)+1
 nz =  INT(z/dz)+1
 
+PRINT*,'ny=', ny
+PRINT*,'nx=', nx
 
 ALLOCATE(T1(ny,nx), T2(ny,nx), alfa(ny,nx)) !n...-1 indica o número de pontos da barra menos o 0 inicial que eu comecei a contagem na direção x ou y. E !A expressão "0:" inicia o contador a partir do zero!!! Caso contrário ele se inicia a partir do 1!!!
 
@@ -114,12 +116,12 @@ DO l=1,nz ! laço temporal (A marcha no tempo)
     T2(i,j)=T1(i,j)+alfa(i,j)*(T1(i+1,j)-2.0*T1(i,j)+T1(i-1,j)+ T1(i,j+1)-2.0*T1(i,j)+T1(i,j-1))
     ENDDO
   ENDDO
-  CALL Snap() 
+  CALL Snap()
   T1(2:ny-1,2:nx-1)=T2(2:ny-1,2:nx-1)! Atualização da variável temperatura. Mapeia a variação temporal
 ENDDO
 WRITE(*,*)'Final da marcha temporal'
 
-DEALLOCATE(T1,T2,alfa) 
+DEALLOCATE(T1,T2,alfa)
 
 PRINT*,'Tamanho de T2',SIZE(T2)
 
@@ -131,7 +133,7 @@ PRINT*,'*********************** FIM ***************************'
 
 
 
-CONTAINS 
+CONTAINS
 !Criando os snapshots e gerando o arquivo de saída
 SUBROUTINE Snap()
 IMPLICIT NONE
