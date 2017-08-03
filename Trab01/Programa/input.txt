@@ -1,12 +1,12 @@
-6       # dimensao da placa em cm (x);
-10       # dimensao da placa em cm (y);
-2       # subdivisoes horizontais na placa (dx);
-2       # subdivisoes verticais na placa (dy);
+1000       # dimensao da placa em cm (x);
+1000       # dimensao da placa em cm (y);
+1        # subdivisoes horizontais na placa (dx);
+1        # subdivisoes verticais na placa (dy);
 50       # laco temporal (z);
 0.1      # discretizacao temporal (dz);
 0.835    # difusividade termica (alfa);
-100.0    # temperatura na borda esquerda (Tesq);   
+100.0    # temperatura na borda esquerda (Tesq);
 50.0     # temperatura na borda direita (Tdir);
-150.0    # temperatura na borda superior (Tsup);   
+150.0    # temperatura na borda superior (Tsup);
 30.0     # temperatura na borda inferior (Tinf);
 50       # numero de snapshots (nsnap).
