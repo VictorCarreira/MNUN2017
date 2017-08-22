@@ -9,10 +9,10 @@ PROGRAM Onda2D
 ! Declaração de Variáveis Globais
 IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
-INTEGER(KIND=SGL)::i, j, k, nx, nz, nt, x, z, snap_passos, xi_fonte, zi_fonte, nsnap
+INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap
 INTEGER(KIND=SGL):: alfa2, alfa4, beta
-REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, c, inicial, final, custocomputacional, dt
-REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fat, sfonte, h
+REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
+REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fat, h
 REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c
@@ -25,13 +25,14 @@ CALL cpu_time(inicial)
 
 CALL Entrada()
 
-CALL Fonte()
+CALL Explosiva()
 
 !Condição inicial. Zerando variáveis
  P1=0.0
  P2=0.0
  P3=0.0
 
+c=c*c*(dt*dt)/(h*h)
 
 !Cálculo das DF (Stencil)
 DO n=1,nt
@@ -39,7 +40,7 @@ DO n=1,nt
     DO j=2,nx-1
       DO i=2,nz-1
        !P3(i,j,k)=[(DeltaT**2 * c(i,j)**2)/12*h]*[-(P2(i-2,j,k)+P2(i,j-2,k)+P2(i+2,j,k)+P2(i,j+2,k)) + 16*(P2(i-1,j,k)+P2(i,j-1,k)+P2(i+1,j,k)+P2(i,j+1,k))-60*P2(i,j+1,k)] + 2* P2(i,j,k) - P2(i,j,k-1) + (DeltaT**2) * [c(i,j)**2] * rho(i,j) * s(i,j,k) !Quarta ordem
-        P3(i,j)=2*P2(i,j)-P1(i,j)+vp(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
+        P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
     CALL Oneway()
     CALL Cerjan()
@@ -57,16 +58,15 @@ PRINT*,'*********************** FIM ***************************'
 
 
 CONTAINS
-SUBROUTINE Fonte(fcorte, ampl_fonte, t, nt, fonte)
-
+SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte)
   IMPLICIT NONE
   REAL(KIND=SGL),INTENT(IN)::fcorte, ampl_fonte
-  INTEGER(KIND=SGL), INTENT(IN):: t
+  INTEGER(KIND=SGL), INTENT(IN):: t, nt
   INTEGER(KIND=SGL)::nfonte
   REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE, INTENT(OUT):: fonte
-  INTEGER(KIND=SGL):: nfonte
   REAL(KIND=SGL):: t0, dt, fc
   REAL(KIND=SGL), PARAMETER::pi=3.141593
+
 
   t0 = 2*SQRT(pi)/fcorte
   fc = fcorte/3*SQRT(pi)
@@ -85,7 +85,7 @@ SUBROUTINE Fonte(fcorte, ampl_fonte, t, nt, fonte)
     WRITE(20,*)i*dt,fonte(i)
   ENDDO
 
-ENDSUBROUTINE Fonte
+ENDSUBROUTINE Explosiva
 
 !------------------------------------------------------------------------------------
 SUBROUTINE Entrada() ! Leitura dos dados de entrada
@@ -149,8 +149,8 @@ IF(existe_arq) THEN
       nt=int(t/dt)+1
 
       !posição da fonte na malha
-      xi_fonte=nint(xfonte/h)+1
-      zi_fonte=nint(zfonte/h)+1
+      xifonte=nint(xfonte/h)+1
+      zifonte=nint(zfonte/h)+1
 
       !calculo do passo de tempo entre cada snap
       snap_passos=int(nt/nsnap)
@@ -174,11 +174,11 @@ ENDSUBROUTINE Entrada
 
 SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
   IMPLICIT NONE
-  INTEGER(KIND=SGL),INTENT(IN)::nx,nz,nt,x,z,t
+  INTEGER(KIND=SGL),INTENT(INOUT)::nx,nz,nt,x,z,t
   INTEGER(KIND=SGL)::i,j
   REAL(KIND=SGL), DIMENSION(:,:),ALLOCATABLE,INTENT(INOUT):: P2, P3, c
 
-ALLOCATE(P2(nx,nz),P3(nx,nz), c(nx,nz))
+ALLOCATE(P2(nz,nx),P3(nz,nx), c(nz,nx))
 
 
   DeltaX=x/nx
@@ -188,17 +188,17 @@ ALLOCATE(P2(nx,nz),P3(nx,nz), c(nx,nz))
 !Condição de contorno (Oneway):
 
 !Borda Direita
-DO i=1,nx
+DO i=1,nz
   P3(i,j)= - (c(i,j)*DeltaT/DeltaX) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
 ENDDO
 
 !Borda Esquerda
-DO i=1,nx
+DO i=1,nz
   P3(i,j)= - (c(i,j)*DeltaT/DeltaX) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
 ENDDO
 
 !Fundo
-DO j=1,nz
+DO j=1,nx
   P3(i,j)= - (c(i,j)*DeltaT/DeltaZ) * (P2(i,j)-P2(i,j-1)) +P2(i,j)
 ENDDO
 
@@ -228,12 +228,13 @@ ENDSUBROUTINE Cerjan
 
 SUBROUTINE Dispersao(c, alfa2, alfa4, fcorte, h)
   IMPLICIT NONE
-  REAL(KIND=SGL),INTENT(IN)::c, alfa2, alfa4, fcorte
+  REAL(KIND=SGL),INTENT(IN), ALLOCATABLE, DIMENSION(:,:)::c
+  REAL(KIND=SGL),INTENT(IN)::alfa2, alfa4, fcorte
   REAL(KIND=SGL),INTENT(INOUT)::h
 
 
   !Critério da Não-dispersão de segunda ordem:
-  IF (h .LE. (MIN(c)/alfa2*fcorte)) THEN
+  IF (h .LE. (MIN(nz,nx)/alfa2*fcorte)) THEN
       PRINT*, 'Não-dispersa'
   ELSE
       PRINT*,'Dispersa'
@@ -241,7 +242,7 @@ SUBROUTINE Dispersao(c, alfa2, alfa4, fcorte, h)
   ENDIF
 
   !Critério da Não-dispersão de quarta ordem:
-  IF (h .LE. (MIN(c)/alfa4*fcorte)) THEN
+  IF (h .LE. (MIN(nz,nx)/alfa4*fcorte)) THEN
       PRINT*, 'Não-dispersa'
   ELSE
       PRINT*,'Dispersa'
@@ -255,11 +256,12 @@ ENDSUBROUTINE Dispersao
 
 SUBROUTINE Estabilidade(h, beta, c, DeltaT)
   IMPLICIT NONE
-  REAL(KIND=SGL),INTENT(IN)::c, beta, h
+  REAL(KIND=SGL),INTENT(IN), ALLOCATABLE, DIMENSION(:,:)::c
+  REAL(KIND=SGL),INTENT(IN)::beta, h
   REAL(KIND=SGL),INTENT(OUT)::DeltaT
 
   !Critério de Estabilidade:
-  IF (DeltaT .LE. (h/beta*MAX(c))) THEN
+  IF (DeltaT .LE. (h/beta*MAX(nz,nx))) THEN
       PRINT*,'ESTÁVEL'
   ELSE
       PRINT*,'INSTÁVEL'
@@ -272,18 +274,33 @@ ENDSUBROUTINE Estabilidade
 
 SUBROUTINE Snap()
 
-IF(MOD(l,nsnap)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é uma intrínseca que devolve o resto de l na divisão por nsnap, ambos os argumentos sendo do mesmo tipo (l-INT(l/nsnap) * nsnap)
+IF(MOD(n,nsnap)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é uma intrínseca que devolve o resto de l na divisão por nsnap, ambos os argumentos sendo do mesmo tipo (l-INT(l/nsnap) * nsnap)
   csnap=csnap+1
   WRITE(num_snap,'(I3.3)')csnap
   WRITE(*,*) 'Imprimindo snap', num_snap, '...'
-  OPEN(3,FILE='snap'//num_snap//'.bin',STATUS='replace', ACCESS='direct', FORM='unformatted', RECL=SGL*nx*ny)
-  WRITE(3,REC=1) ((T2(i,j),i=1,ny), j=1,nx)
+  OPEN(3,FILE='snap'//num_snap//'.bin',STATUS='replace', ACCESS='direct', FORM='unformatted', RECL=SGL*nx*nz)
+  WRITE(3,REC=1) ((P2(i,j),i=1,nz), j=1,nx)
   CLOSE(3)
 ENDIF
 
 ENDSUBROUTINE Snap
 
 !---------------------------------------------------------------------------------------
+
+SUBROUTINE Modelo()
+
+  INQUIRE(file=vp_nome,exist=existe_arq)
+
+  IF(existe_arq) then
+  OPEN(10,FILE=vp_nome, STATUS='UNKNOWN',ACCESS='DIRECT', FORM='UNFORMATTED',RECL=4*nz*nx)
+  READ(10,REC=1)((c(i,j),i=1,nz),j=1,nx)
+  ELSE
+    WRITE(*,*)'Rodando na agua'
+    c=1500.0
+  ENDIF
+
+
+ENDSUBROUTINE Modelo
 
 
 END PROGRAM Onda2D
