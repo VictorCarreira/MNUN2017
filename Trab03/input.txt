@@ -13,4 +13,4 @@
 10       # Criterio de dispersao quarta ordem , alfa4
 4        # numero de Iteracoes para levar de 1 para 2, beta
 20       # numero de snapshots ,nsnap
-"dif.bin"# nome do arquivo, vp_nome
+          20
