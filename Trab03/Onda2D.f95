@@ -10,9 +10,8 @@ PROGRAM Onda2D
 IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap
-INTEGER(KIND=SGL):: alfa2, alfa4, beta
 REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
-REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fat, h
+REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fat, h, at, alfa2, alfa4, beta
 REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c
@@ -25,30 +24,38 @@ CALL cpu_time(inicial)
 
 CALL Entrada()
 
-CALL Explosiva()
+CALL Dispersao(c,alfa2,alfa4,fcorte,h)
+
+CALL Estabilidade(h,beta,c,DeltaT)
+
+CALL Explosiva(fcorte, ampl_fonte, t, nt, fonte)
 
 !Condição inicial. Zerando variáveis
  P1=0.0
  P2=0.0
  P3=0.0
 
-c=c*c*(dt*dt)/(h*h)
+!c=c*c*(dt*dt)/(h*h)
 
 !Cálculo das DF (Stencil)
 DO n=1,nt
   P1(zifonte,xifonte)=P1(zifonte,xifonte)-fonte(n)
+  !IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avan�o no tempo de 50 em 50 passos
     DO j=2,nx-1
       DO i=2,nz-1
        !P3(i,j,k)=[(DeltaT**2 * c(i,j)**2)/12*h]*[-(P2(i-2,j,k)+P2(i,j-2,k)+P2(i+2,j,k)+P2(i,j+2,k)) + 16*(P2(i-1,j,k)+P2(i,j-1,k)+P2(i+1,j,k)+P2(i,j+1,k))-60*P2(i,j+1,k)] + 2* P2(i,j,k) - P2(i,j,k-1) + (DeltaT**2) * [c(i,j)**2] * rho(i,j) * s(i,j,k) !Quarta ordem
         P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
-    CALL Oneway()
-    CALL Cerjan()
+    !CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+    !CALL Cerjan(fat,at)
    ENDDO
   CALL Snap()
+  !P1(2:nz-1,2:nx-1)=P2(2:nz-1,2:nx-1) !atualiza as temperaturas para continuar a marcha
+  !P2(2:nz-1,2:nx-1)=P3(2:nz-1,2:nx-1)
 ENDDO
 
-
+OPEN(5,file="P3.txt")
+WRITE(5,*)P3
 
 CALL cpu_time(final)
 custocomputacional=final-inicial
@@ -60,8 +67,8 @@ PRINT*,'*********************** FIM ***************************'
 CONTAINS
 SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte)
   IMPLICIT NONE
-  REAL(KIND=SGL),INTENT(IN)::fcorte, ampl_fonte
-  INTEGER(KIND=SGL), INTENT(IN):: t, nt
+  REAL(KIND=SGL),INTENT(IN)::fcorte, ampl_fonte, t
+  INTEGER(KIND=SGL), INTENT(IN)::  nt
   INTEGER(KIND=SGL)::nfonte
   REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE, INTENT(OUT):: fonte
   REAL(KIND=SGL):: t0, dt, fc
@@ -124,7 +131,7 @@ IF(existe_arq) THEN
   WRITE(*,*) x     ! comprimento Stencil na direção x (cm)
   WRITE(*,*) z     ! comprimento Stencil na direção z (cm);
   WRITE(*,*) t    ! Iteracoes temporais (s);
-  WRITE(*,*) c  ! temperatura na borda inferior (°C)
+  WRITE(*,*) c  ! Velocidade de onda p
   WRITE(*,*) h     ! Espaçamento entre os pontos
   WRITE(*,*) dt    ! discretizacao temporal (tempo fisico do experimento)
   !DADOS DE ENTRADA DA FONTE
@@ -140,7 +147,7 @@ IF(existe_arq) THEN
 
   ! Número de arquivos de saída
   WRITE(2,*) nsnap ! número de snapshots
-
+        c=1500
         c=c**2 ! Escrever a eq da Onda2D
 
       !discretizacao da malha
@@ -174,11 +181,12 @@ ENDSUBROUTINE Entrada
 
 SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
   IMPLICIT NONE
-  INTEGER(KIND=SGL),INTENT(INOUT)::nx,nz,nt,x,z,t
+  INTEGER(KIND=SGL),INTENT(IN)::nx,nz,nt,x,Z
   INTEGER(KIND=SGL)::i,j
+  REAL(KIND=SGL), INTENT(IN)::t
   REAL(KIND=SGL), DIMENSION(:,:),ALLOCATABLE,INTENT(INOUT):: P2, P3, c
 
-ALLOCATE(P2(nz,nx),P3(nz,nx), c(nz,nx))
+!ALLOCATE(P2(nz,nx),P3(nz,nx), c(nz,nx))
 
 
   DeltaX=x/nx
@@ -209,16 +217,19 @@ ENDSUBROUTINE Oneway
 
 SUBROUTINE Cerjan(fat,at)
    IMPLICIT NONE
-    REAL(KIND=SGL),INTENT(IN)::fat !Fator de atenuação
+    !REAL(KIND=SGL),INTENT(IN)::fat !Fator de atenuação
+    REAL(KIND=SGL), INTENT(IN)::fat
     REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE, INTENT(OUT):: at !domínio da função cerjan
-    INTEGER(KIND=SGL), PARAMETER::n=100
+    INTEGER(KIND=SGL), PARAMETER::k=100
 
-ALLOCATE(at(n))
+    ALLOCATE(at(k))
 
 !Condição de Contorno (Cerjan):
+at=0.0
 
-DO i=1,n
-  at(i)=EXP(fat*((n-i)**2))!OLHAR NO EXCEL
+
+DO i=1,k
+  at(i)=EXP(fat*(100-i)**2)!OLHAR NO EXCEL
 ENDDO
 
 ENDSUBROUTINE Cerjan
@@ -274,7 +285,10 @@ ENDSUBROUTINE Estabilidade
 
 SUBROUTINE Snap()
 
-IF(MOD(n,nsnap)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é uma intrínseca que devolve o resto de l na divisão por nsnap, ambos os argumentos sendo do mesmo tipo (l-INT(l/nsnap) * nsnap)
+  !calculo do passo de tempo entre cada snap
+  snap_passos=int(nt/nsnap)
+
+IF(MOD(n,snap_passos)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é uma intrínseca que devolve o resto de l na divisão por nsnap, ambos os argumentos sendo do mesmo tipo (l-INT(l/nsnap) * nsnap)
   csnap=csnap+1
   WRITE(num_snap,'(I3.3)')csnap
   WRITE(*,*) 'Imprimindo snap', num_snap, '...'
