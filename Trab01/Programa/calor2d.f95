@@ -11,11 +11,11 @@ PROGRAM calor2d
 IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 INTEGER(KIND=SGL)::i, j, l, nx, ny, nz ! Contadores(i,j,l) e Parametros numéricos[nx(dimensão), ny(dimensão), nz(tempo real devido a instabilidade numérica) e nl(é um índice auxiliar de tempo inteiro)]
-INTEGER(KIND=SGL)::nsnap,csnap=0!Número de snapshots para impressão e o contador de snapshots.
+INTEGER(KIND=SGL)::nsnap,csnap=0!Número de snapshots e o contador de snapshots.
 INTEGER(KIND=SGL)::dx,dy !Parâmetros numéricos distância nos três eixos.
 REAL(KIND=SGL)::x, y, z, dz, Tesq, Tdir, Tinf, Tsup, inicial, final, custocomputacional
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:)::T1,T2, alfa !Vetores com as temperaturas
-CHARACTER(LEN=3)::num_snap!Contador de snaps para impressão
+CHARACTER(LEN=2)::num_snap!Contador de snaps para impressão
 
 !                           EXPERIMENTO
 !
@@ -76,9 +76,9 @@ READ(2,*) Tinf  ! temperatura na borda inferior (°C)
 READ(2,*) nsnap ! número de snapshots
 
 ! Condições de valor inicial da barra de alumínio:
-nx =  INT(x/dx)+1 ! conversao de inteiro em real 4 somente para o cálculo de dx ! diferenca entre numero de passos e numero de pontos!!!!!
-ny =  INT(y/dy)+1
-nz =  INT(z/dz)+1
+nx =  NINT(x/dx)+1 ! conversao de inteiro em real 4 somente para o cálculo de dx ! diferenca entre numero de passos e numero de pontos!!!!!
+ny =  NINT(y/dy)+1
+nz =  NINT(z/dz)+1
 
 !snap_passos=INT(nt/nsnap) !Transforma o número de snpas em número de passos de tempo.
 
@@ -103,7 +103,7 @@ T1(:,nx)=Tdir
 T1(1,:)=Tsup
 T1(ny,:)=Tinf
 
-T2=T1 !As condições de contorno não variam tanto no tempo presente quanto no tempo futuro.
+T1=T2 !As condições de contorno não variam tanto no tempo presente quanto no tempo futuro.
 
 
 !Difusividade Térmica ao longo da placa
@@ -115,16 +115,16 @@ alfa=alfa*dz/(dx*dy)
 DO l=1,nz ! laço temporal (A marcha no tempo)
   IF(MOD(l,50)==0) WRITE(*,*)'passo',l
   DO j=2,nx-1   ! laço só do miolo da malha (2,nx-1) são as bordas. O cálculo das DFS (espaço).
-    DO i=2,ny-1   ! laço só do miolo da malha (2,nz-1) são as bordas. O cálculo das DFS (espaço).
+    DO i=2,ny-1   ! laço só do miolo da malha (2,ny-1) são as bordas. O cálculo das DFS (espaço).
     T2(i,j)=T1(i,j)+alfa(i,j)*(T1(i+1,j)-2.0*T1(i,j)+T1(i-1,j)+ T1(i,j+1)-2.0*T1(i,j)+T1(i,j-1))
     ENDDO
   ENDDO
   CALL Snap()
-  T1(2:ny-1,2:nx-1)=T2(2:ny-1,2:nx-1)! Atualização da variável temperatura. Mapeia a variação temporal
+  T2(2:ny-1,2:nx-1)=T1(2:ny-1,2:nx-1)! Atualização da variável temperatura. Mapeia a variação temporal
 ENDDO
 WRITE(*,*)'Final da marcha temporal'
 
-DEALLOCATE(T1,T2,alfa)
+!DEALLOCATE(T1,T2,alfa)
 
 PRINT*,'Tamanho de T2',SIZE(T2)
 
