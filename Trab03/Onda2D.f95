@@ -12,6 +12,7 @@ INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap
 REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
 REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fat, h, at, alfa2, alfa4, beta
+!REAL(KIND=SGL):: Cerjan
 REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c
@@ -50,8 +51,8 @@ DO n=1,nt
     !CALL Cerjan(fat,at)
    ENDDO
   CALL Snap()
-  !P1(2:nz-1,2:nx-1)=P2(2:nz-1,2:nx-1) !atualiza as temperaturas para continuar a marcha
-  !P2(2:nz-1,2:nx-1)=P3(2:nz-1,2:nx-1)
+  P1(2:nz-1,2:nx-1)=P2(2:nz-1,2:nx-1) !atualiza as temperaturas para continuar a marcha
+  P2(2:nz-1,2:nx-1)=P3(2:nz-1,2:nx-1)
 ENDDO
 
 OPEN(5,file="P3.txt")
@@ -212,29 +213,6 @@ ENDDO
 
 ENDSUBROUTINE Oneway
 
-!----------------------------------------------------------------------------------
-
-
-SUBROUTINE Cerjan(fat,at)
-   IMPLICIT NONE
-    !REAL(KIND=SGL),INTENT(IN)::fat !Fator de atenuação
-    REAL(KIND=SGL), INTENT(IN)::fat
-    REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE, INTENT(OUT):: at !domínio da função cerjan
-    INTEGER(KIND=SGL), PARAMETER::k=100
-
-    ALLOCATE(at(k))
-
-!Condição de Contorno (Cerjan):
-at=0.0
-
-
-DO i=1,k
-  at(i)=EXP(fat*(100-i)**2)!OLHAR NO EXCEL
-ENDDO
-
-ENDSUBROUTINE Cerjan
-
-
 !-----------------------------------------------------------------------------------
 
 SUBROUTINE Dispersao(c, alfa2, alfa4, fcorte, h)
@@ -315,6 +293,23 @@ SUBROUTINE Modelo()
 
 
 ENDSUBROUTINE Modelo
+
+
+!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FUNÇÕES UTILIZADAS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+REAL FUNCTION Fcerj(fat)
+     IMPLICIT NONE
+      !REAL(KIND=SGL),INTENT(IN)::fat !Fator de atenuação
+      REAL(KIND=SGL)::fat
+      !REAL(KIND=SGL), INTENT(OUT):: fcerj !domínio da função cerjan
+      INTEGER(KIND=SGL), PARAMETER::ncerj=100
+
+  !Condição de Contorno (Cerjan):
+
+    Fcerj=EXP(-(fat*(ncerj-i))**2)!OLHAR NO EXCEL
+
+
+END FUNCTION Fcerj
 
 
 END PROGRAM Onda2D
