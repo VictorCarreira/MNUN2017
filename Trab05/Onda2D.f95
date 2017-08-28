@@ -9,8 +9,9 @@ PROGRAM Onda2D_230817
 ! Declaração de Variáveis Globais
 IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
-INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap
-INTEGER(KIND=SGL):: alfa2, alfa4, beta,ncer
+INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap=0
+INTEGER(KIND=SGL):: ncer
+REAL(KIND=SGL)::alfa2, alfa4, beta, fat
 REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
 REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fcer, h, at,c_const
 REAL(KIND=SGL), PARAMETER::pi=3.1416
@@ -26,27 +27,28 @@ CALL cpu_time(inicial)
 
 CALL Entrada()
 
+CALL Dispersao(c,alfa2,alfa4,fcorte,h)
+
+CALL Estabilidade(h,beta,c,DeltaT)
+
 CALL Explosiva(fcorte, ampl_fonte, t, nt, fonte)
 
-!Condição inicial. Zerando variáveis
- P1=0.0
- P2=0.0
- P3=0.0
-
 c=c*c*(dt*dt)/(h*h)
-
+!STOP
 !Cálculo das DF (Stencil)
 DO n=1,nt
-  !P1(zifonte,xifonte)=P1(zifonte,xifonte)-fonte(n)
+  P1(zifonte,xifonte)=P1(zifonte,xifonte)-fonte(n)
     DO j=2,nx-1
       DO i=2,nz-1
        !P3(i,j,k)=[(DeltaT**2 * c(i,j)**2)/12*h]*[-(P2(i-2,j,k)+P2(i,j-2,k)+P2(i+2,j,k)+P2(i,j+2,k)) + 16*(P2(i-1,j,k)+P2(i,j-1,k)+P2(i+1,j,k)+P2(i,j+1,k))-60*P2(i,j+1,k)] + 2* P2(i,j,k) - P2(i,j,k-1) + (DeltaT**2) * [c(i,j)**2] * rho(i,j) * s(i,j,k) !Quarta ordem
         P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
-!    CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
-    !CALL Cerjan(fcer,g)
+    !CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+    !CALL Cerjan(fcer,g, P2, P3)
    ENDDO
-  !CALL Snap()
+   CALL Snap()
+   P1(2:nz-1,2:nx-1)=P2(2:nz-1,2:nx-1) !atualiza as temperaturas para continuar a marcha
+   P2(2:nz-1,2:nx-1)=P3(2:nz-1,2:nx-1)
 ENDDO
 
 
@@ -56,6 +58,9 @@ custocomputacional=final-inicial
 PRINT*, 'Custo Computacional=',custocomputacional, 'segundos'
 PRINT*,'*********************** FIM ***************************'
 
+
+
+!######################## EXTRAS ########################################################################################################################
 
 
 CONTAINS
@@ -112,7 +117,7 @@ IF(existe_arq) THEN
   READ(2,*) zfonte ! Posição da Fonte em profundidade
   READ(2,*) ampl_fonte ! Amplitude da fonte
   READ(2,*) fcorte ! Frequencia de corte
-  READ(2,*) fcer,ncer  ! Frator de atenuação
+  READ(2,*) fcer,ncer  ! Fator de atenuação
  ! Critérios de Estabilidade e Dispersao
   READ(2,*) alfa2  ! Alfa de segunda ordem
   READ(2,*) alfa4  ! Alfa de quarta ordem
@@ -133,7 +138,7 @@ IF(existe_arq) THEN
   WRITE(*,*) zfonte ! Posição da Fonte em profundidade
   WRITE(*,*) ampl_fonte ! Amplitude da fonte
   WRITE(*,*) fcorte ! Frequencia de corte
-  WRITE(*,*) fcer,ncer ! Frequencia de atenuação
+  WRITE(*,*) fcer,ncer ! Fator de atenuação
   ! Critérios de Estabilidade e Dispersao
   WRITE(*,*) alfa2  ! Alfa de segunda ordem
   WRITE(*,*) alfa4  ! Alfa de quarta ordem
@@ -142,7 +147,7 @@ IF(existe_arq) THEN
   ! Número de arquivos de saída
   WRITE(2,*) nsnap ! número de snapshots
 
-        c=c**2 ! Escrever a eq da Onda2D
+        !c=c**2 ! Escrever a eq da Onda2D
 
       !discretizacao da malha
       nx=nint(x/h)+1
@@ -162,6 +167,12 @@ IF(existe_arq) THEN
       WRITE(*,*) ""
 
       ALLOCATE(P1(nz,nx),P2(nz,nx),P3(nz,nx),c(nz,nx))
+
+
+      !Condição inicial. Zerando variáveis
+       P1=0.0
+       P2=0.0
+       P3=0.0
 
       if(c_const==0.0) then
         !ler binario
@@ -197,13 +208,14 @@ SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
   DeltaX=x/nx
   DeltaZ=z/nz
   DeltaT=t/nt
+  c=SQRT(c)
 
 !Condição de contorno (Oneway):
 
 !Borda Direita
 j=Nx !indices i e j trocados em todas. conferir sinais e usar sqrt(c)
 DO i=1,nz
-  P3(i,j)= - (c(i,j)*DeltaT/DeltaX) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
+  P3(i,j)= + (c(i,j)*DeltaT/DeltaX) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
 ENDDO
 
 !Borda Esquerda
@@ -215,7 +227,7 @@ ENDDO
 !Fundo
 i=nz
 DO j=1,nx
-  P3(i,j)= - (c(i,j)*DeltaT/DeltaZ) * (P2(i,j)-P2(i,j-1)) +P2(i,j)
+  P3(i,j)= + (c(i,j)*DeltaT/DeltaZ) * (P2(i,j)-P2(i,j-1)) +P2(i,j)
 ENDDO
 
 ENDSUBROUTINE Oneway
@@ -223,13 +235,21 @@ ENDSUBROUTINE Oneway
 !----------------------------------------------------------------------------------
 
 
-SUBROUTINE Cerjan(fcer,g)
+SUBROUTINE Cerjan(fcer,g, P2, P3)
    IMPLICIT NONE
     REAL(KIND=SGL),INTENT(IN)::fcer !Fator de atenuação
-    REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE:: g
+    REAL(KIND=SGL), DIMENSION(:), INTENT(IN):: g
+    REAL(KIND=SGL), DIMENSION(:,:), INTENT(INOUT)::P2,P3
     INTEGER(KIND=SGL), PARAMETER::n=100
 
-    ALLOCATE(g(n))
+    !ALLOCATE(g(n))
+   !Borda Esquerda
+    DO j= 1, n-1
+      DO i= 1, nz
+        P2(i,j)=g(i)*P2(i,j)
+        P3(i,j)=g(i)*P3(i,j)
+      ENDDO
+    ENDDO
 
 ENDSUBROUTINE Cerjan
 
@@ -288,7 +308,7 @@ IF(MOD(n,nsnap)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é
   csnap=csnap+1
   WRITE(num_snap,'(I3.3)')csnap
   WRITE(*,*) 'Imprimindo snap', num_snap, '...'
-  OPEN(3,FILE='snap'//num_snap//'.bin',STATUS='replace', ACCESS='direct', FORM='unformatted', RECL=SGL*nx*nz)
+  OPEN(3,FILE='snap'//num_snap//'.bin',STATUS='replace', ACCESS='direct', FORM='unformatted', RECL=4*nx*nz)
   WRITE(3,REC=1) ((P2(i,j),i=1,nz), j=1,nx)
   CLOSE(3)
 ENDIF

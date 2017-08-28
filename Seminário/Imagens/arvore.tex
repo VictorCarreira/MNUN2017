@@ -1,0 +1,31 @@
+ \usepackage[usenames,dvipsnames]{pstricks}
+ \usepackage{epsfig}
+ \usepackage{pst-grad} % For gradients
+ \usepackage{pst-plot} % For axes
+ \usepackage[space]{grffile} % For spaces in paths
+ \usepackage{etoolbox} % For spaces in paths
+ \makeatletter % For spaces in paths
+ \patchcmd\Gread@eps{\@inputcheck#1 }{\@inputcheck"#1"\relax}{}{}
+ \makeatother
+ % User Packages:
+ \usepackage[utf8x]{inputenc}
+ \usepackage{ucs}
+ \usepackage[english, brazil]{babel}
+ \usepackage{amsmath}
+ \usepackage{amsfonts}
+ \usepackage{amssymb}
+ \usepackage{mathtools}
+ \usepackage{graphicx}
+% 
+\psscalebox{1.0 1.0} % Change this value to rescale the drawing.
+{
+\begin{pspicture}(0,-4.2)(17.22,4.2)
+\psframe[linecolor=black, linewidth=0.04, dimen=outer](11.3,4.2)(5.7,2.8)
+\psframe[linecolor=black, linewidth=0.04, dimen=outer](5.94,-2.6)(0.0,-4.2)
+\psframe[linecolor=black, linewidth=0.04, dimen=outer](17.22,-2.44)(11.28,-4.1)
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(8.3,2.8)(2.7,-2.42)(2.52,-2.6)
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(8.32,2.78)(14.64,-2.4)
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(8.34,2.74)(8.38,-1.64)
+\end{pspicture}
+}
+

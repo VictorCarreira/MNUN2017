@@ -1,0 +1,60 @@
+% \usepackage[usenames,dvipsnames]{pstricks}
+% \usepackage{epsfig}
+% \usepackage{pst-grad} % For gradients
+% \usepackage{pst-plot} % For axes
+% \usepackage[space]{grffile} % For spaces in paths
+% \usepackage{etoolbox} % For spaces in paths
+% \makeatletter % For spaces in paths
+% \patchcmd\Gread@eps{\@inputcheck#1 }{\@inputcheck"#1"\relax}{}{}
+% \makeatother
+% % User Packages:
+% \usepackage[utf8x]{inputenc}
+% \usepackage{ucs}
+% \usepackage[english, brazil]{babel}
+% \usepackage{amsmath}
+% \usepackage{amsfonts}
+% \usepackage{amssymb}
+% \usepackage{mathtools}
+% \usepackage{graphicx}
+% 
+\psscalebox{1.0 1.0} % Change this value to rescale the drawing.
+{
+\begin{pspicture}(0,-4.668462)(20.985455,4.668462)
+\definecolor{colour0}{rgb}{0.8,0.8,0.8}
+\definecolor{colour1}{rgb}{1.0,0.0,0.2}
+\definecolor{colour2}{rgb}{0.5019608,0.5019608,0.5019608}
+\pscustom[linecolor=blue, linewidth=0.04, fillstyle=solid]
+{
+\newpath
+\moveto(15.111111,-2.931538)
+\lineto(15.577778,-2.8204272)
+\curveto(15.8111105,-2.7648718)(16.11111,-2.642649)(16.177778,-2.5759826)
+\curveto(16.244444,-2.5093157)(16.366667,-2.3093157)(16.422222,-2.1759827)
+\curveto(16.477777,-2.042649)(16.644445,-1.8537598)(16.755556,-1.7982043)
+\curveto(16.866667,-1.742649)(17.033333,-1.6982044)(17.2,-1.731538)
+}
+\psellipse[linecolor=black, linewidth=0.04, fillstyle=gradient, gradlines=2000, gradbegin=colour0, gradend=white, dimen=outer](10.184,-2.8915381)(1.208,1.144)
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.56,-1.0435381)(8.96,-2.3555381)
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.512,-2.4835382)(8.848,-2.7235382)
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.4,-4.331538)(8.896,-3.267538)
+\psdots[linecolor=black, dotsize=0.1](5.12,-2.915538)
+\psdots[linecolor=black, dotsize=0.1](5.12,-3.251538)
+\psdots[linecolor=black, dotsize=0.1](5.12,-3.523538)
+\rput[bl](5.008,-2.515538){$X_{2}$}
+\rput[bl](4.96,-1.0915381){$X_{1}$}
+\rput[bl](4.96,-4.451538){$X_{n}$}
+\rput[bl](9.835088,-3.2508364){\Huge$\sum$}
+\rput[bl](6.677193,-1.226275){\textcolor{colour1}{$w_{1}$}}
+\rput[bl](6.5964913,-2.4192574){\textcolor{colour1}{$w_{2}$}}
+\rput[bl](6.5964913,-3.6122398){\textcolor{colour1}{$w_{n}$}}
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(11.636364,-2.9679017)(14.424242,-2.9679017)
+\rput(14.84,-4.451538){\psgrid[gridwidth=0.028222222, subgridwidth=0.014111111, gridlabels=6.0pt, unit=1.5cm, subgridcolor=colour2](0,0)(0,0)(2,2)
+\psset{unit=1.0cm}}
+
+\rput[bl](16.51111,-1.420427){\textcolor{blue}{\large$g(x)$}}
+\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(18.0,-2.9679017)(20.181818,-2.9679017)(20.363636,-2.9679017)
+\rput[bl](20.545454,-3.1679018){\Huge$y$}
+\rput[bl](12.927273,-2.9133563){$h$}
+\end{pspicture}
+}
+

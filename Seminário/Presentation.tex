@@ -1,0 +1,219 @@
+%\documentclass[aspectratio=169]{beamer} %para apresentações em widescreen
+\documentclass[10pt]{beamer} %para apresentação normal
+\logo{\includegraphics[height=1cm]{Imagens/logon.jpg}\vspace{220pt}}
+\newcommand{\nologo}{\setbeamertemplate{logo}{}} % command to set the logo to nothing
+\usetheme{default}
+\usefonttheme{serif}
+\usecolortheme{default}
+%%%%%%%%%%%%%%%%%%%%PACOTES EXTRAS%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese, english]{babel}
+\usepackage[round]{natbib}
+\usepackage{hyperref} 
+\usepackage{smartdiagram}
+\usepackage{graphicx} % Required for including images
+\usepackage{graphics}
+\graphicspath{{figures/}} % Location of the graphics files
+\usepackage{booktabs} % Top and bottom rules for table
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+\usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
+\usepackage{wrapfig} % Allows wrapping text around tables and figures
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{times}
+\usepackage{makeidx}
+\usepackage{lipsum} % Required to insert dummy text. To be removed otherwise
+\usepackage{epstopdf}%adiciona imagens em formato eps no pdf.
+\usepackage{subfigure}%cria ambientes de multifiguras
+\usepackage{float}%coloca as figuras exatamente aonde você quer
+\usepackage{lipsum} % Required to insert dummy text. To be removed otherwise
+%\usepackage{multicol, blindtext}%cria figura na página inteira
+\hypersetup{colorlinks,breaklinks=true,urlcolor=color2,citecolor=color1,linkcolor=color1,bookmarksopen=false,pdftitle={Title},pdfauthor={Author}}%Comando adaptado para o texmaker do ubuntu 12.4 LTS
+\definecolor{color1}{RGB}{0,0,90} % Color of the article title and sections
+\definecolor{color2}{RGB}{0,20,20} % Color of the boxes behind the abstract and headings
+\usepackage{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------FINAL DO PREÂMBULO------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\author[Carreira,V.R.]{Autor: Victor Carreira \\ Professor: Leandro Di Bartolo}
+\title{Modelagem Numérica de Ondas Sísmicas}
+\subtitle{Seminário}
+\institute{Pós-Graduação \\ Observatório Nacional}
+\date{Setembro de 2017}
+\subject{xxx}
+%\setbeamertemplate{footline}[frame number]
+%\setbeamercovered{transparent}
+%\setbeamertemplate{navigation symbols}{}
+% Tela cheia
+\hypersetup{pdfpagemode=FullScreen}
+
+\usepackage{ragged2e}
+\justifying
+
+
+
+%----------------------------------------------------------------------------------------
+%	SEPARAÇÃO DE SÍLABAS (Exemplos)
+%----------------------------------------------------------------------------------------
+
+\hyphenation{co-o-pe-ra-ção} 
+\hyphenation{a-com-pa-nha-do} 
+\hyphenation{nor-ma-li-za-ção} 
+\hyphenation{nor-ma-li-za-do}
+%-------------------------------------------------------------------------------------------
+
+\begin{document}
+
+\bgroup
+\makeatletter
+\setbeamertemplate{footline}
+\makeatother
+{\nologo
+\begin{frame}
+%\titlepage
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{Imagens/logonvertical.jpg} 
+\end{figure}
+\end{frame}
+}
+\textsc{}\maketitle
+\egroup 
+\addtobeamertemplate{navigation symbols}{}{\hskip6pt\raisebox{2pt}{\color{blue}\insertframenumber}}
+\setcounter{framenumber}{0}
+\AtBeginSection[]
+{ \begin{frame}
+\centering
+\frametitle{Sumário}
+
+\tableofcontents[currentsection,currentsubsection]% apresenta o sumário antes de cada seção
+
+\end{frame} }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----------------------------INTRODUÇÃO---------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introdução}
+
+\begin{frame}
+	\frametitle{Introdução}
+	\transboxin%efeito de transição	
+	\begin{block}{Coloque um subtítulo}
+		\begin{itemize}
+			\pause
+			\item item 1 ;
+			\pause %adiciona pausas entre os itens
+			\item item 2 ...
+			
+		\end{itemize}	
+	\end{block}
+	
+\end{frame}
+
+
+
+
+
+\subsection*{Uma subdivisão}% o * retira a numeração
+
+\begin{frame}
+	\frametitle{Introdução}
+	\framesubtitle{um subtiítulo}
+	\begin{block}{...}
+		blá
+	\end{block}		
+\end{frame}
+	
+	
+	
+\begin{frame}
+\frametitle{Introdução}
+\framesubtitle{RNA}
+
+\begin{block}{O que define um neurônio artificial?}
+\pause
+Segundo o trabalho pioneiro de \citet{McCulloch1943} um neurônio artificial pode ser descrito de acordo com a Eq. \ref{Eq.neuronio-McCulloch}.
+\end{block}
+
+\begin{eqnarray}
+y=\theta \left( \sum^{n}_{j=1} w_{j} x_{j} -u \right)
+\label{Eq.neuronio-McCulloch}
+\end{eqnarray}
+\begin{itemize}
+\pause
+\item $\theta$ é o passo dado na posição $0$;
+\pause
+\item $w_{j}$ é chamada sinapse-peso associado a um $j_{esimo}$ \textit{input};
+\pause
+\item $u$ é função de ativação ou limite;
+\pause 
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%--------------------------CONTROLE DE VERSÃO-------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Controle de Versão}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------ONE-WAY------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{One-way}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------CERJAN---------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cerjan}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------UTILIZAÇÃO DO GITHUB EM MNUM2017----------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Utilização do Github no programa de modelagem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----------------------------BIBLIORGRAFIA---------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bibliografia}
+	\begin{frame}[allowframebreaks]{Bibliografia}
+	%\frametitle{Bibliografia}
+	\beamertemplatetextbibitems
+	\tiny
+	\bibliographystyle{apalike}
+	\bibliography{referencias.bib}
+	\end{frame}
+
+\makeatother
+{\nologo
+\begin{frame}
+%\titlepage
+\begin{figure}
+\includegraphics[scale=0.25]{Imagens/logonvertical.jpg}
+\end{figure}
+\begin{center}
+\begin{minipage}{0.77\textwidth}
+\small
+\begin{center}
+Rua General José Cristino, 77 CEP 20921-400\\
+Rua General Bruce, 586 CEP 20921-030\\
+Bairro Imperial de São Cristóvão, Rio de Janeiro - RJ\\
+PABX: 55 21 3504-9100\\
+\url{www.on.br}
+\end{center}
+\end{minipage}
+\end{center}
+\end{frame}
+}
+\end{document}

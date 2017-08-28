@@ -1,0 +1,2 @@
+set yrange[:] reverse
+do for [i=1:30] {plot sprintf('snap%d.bin',i) binary format="%float" array=201x101 scan=yx with image ; pause 0.2}

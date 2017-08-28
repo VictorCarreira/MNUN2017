@@ -1,16 +1,16 @@
-10       # comprimento Stencil na direção x (cm)
-10       # comprimento Stencil na direção z (cm)
-100.0    # Iteracoes temporais, t
-1500     # Velocidade de onda p, c
-5        # Espacamento entre os pontos, h
+1000       # comprimento Stencil na direção x (cm)
+500       # comprimento Stencil na direção z (cm)
+5   # Iteracoes temporais, t
+1500.0, "dif.bin"   #Velocidade de onda p, c
+2        # Espacamento entre os pontos, h
 8.0E-4   # Discretizacao temporal, dt
-5        # Posicao da fonte na posição horizontal, xfonte
-5        # Posicao da fonte na posição vertical, zfonte
+25       # Posicao da fonte na posição horizontal, xfonte
+10       # Posicao da fonte na posição vertical, zfonte
 10       # Amplitude da fonte, ampl_fonte
 60       # Frequencia de corte, fcorte
-2.50E-4  # Frequencia de atenuação, fat
+2.50E-4,100  # Frequencia de atenuação e número de cerjan, fcer, ncer
 5        # Criterio de dispersao de segunda ordem, alfa2
 10       # Criterio de dispersao quarta ordem , alfa4
 4        # numero de Iteracoes para levar de 1 para 2, beta
-20       # numero de snapshots ,nsnap
+20      # numero de snapshots ,nsnap          20
           20

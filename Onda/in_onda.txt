@@ -1,0 +1,5 @@
+1000 500 1 20       !x,z,t,numero_snap
+2 8.0E-4               !h,dt
+500 250		    !posição da fonte em metros
+10 30               !ampl_fonte, fcorte
+"dif.bin"
