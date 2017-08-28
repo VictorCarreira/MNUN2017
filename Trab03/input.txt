@@ -12,5 +12,5 @@
 5        # Criterio de dispersao de segunda ordem, alfa2
 10       # Criterio de dispersao quarta ordem , alfa4
 4        # numero de Iteracoes para levar de 1 para 2, beta
-20      # numero de snapshots ,nsnap          20
+20      # numero de snapshots ,nsnap
           20

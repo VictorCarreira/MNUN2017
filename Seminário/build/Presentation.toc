@@ -1,8 +1,8 @@
 \beamer@endinputifotherversion {3.36pt}
 \select@language {english}
 \beamer@sectionintoc {1}{Introdu\IeC {\c c}\IeC {\~a}o}{3}{0}{1}
-\beamer@sectionintoc {2}{Controle de Vers\IeC {\~a}o}{14}{0}{2}
-\beamer@sectionintoc {3}{One-way}{15}{0}{3}
-\beamer@sectionintoc {4}{Cerjan}{16}{0}{4}
-\beamer@sectionintoc {5}{Utiliza\IeC {\c c}\IeC {\~a}o do Github no programa de modelagem}{17}{0}{5}
-\beamer@sectionintoc {6}{Bibliografia}{18}{0}{6}
+\beamer@sectionintoc {2}{Controle de Vers\IeC {\~a}o}{11}{0}{2}
+\beamer@sectionintoc {3}{Utiliza\IeC {\c c}\IeC {\~a}o do Github no programa de modelagem}{15}{0}{3}
+\beamer@sectionintoc {4}{One-way}{16}{0}{4}
+\beamer@sectionintoc {5}{Cerjan}{18}{0}{5}
+\beamer@sectionintoc {6}{Bibliografia}{19}{0}{6}

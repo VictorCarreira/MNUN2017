@@ -1,6 +1,6 @@
 PROGRAM Onda2D
   !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  !Aluno: Victor Ribeiro Carreira 
+  !Aluno: Victor Ribeiro Carreira
   !Professor: Leandro Di Bartolo
   !Este programa visa cumprir os requisitos da disciplina MNUM,
   !simulando uma Onda 2D acústica variando no tempo.
@@ -11,9 +11,9 @@ IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap=0
 INTEGER(KIND=SGL):: ncer
-REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
-REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fcer, h, at,c_const
-REAL(KIND=SGL)::alfa2, alfa4, beta, fat
+REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, inicial, final, custocomputacional, dt
+REAL(KIND=SGL)::  xfonte, zfonte, t,fcorte, ampl_fonte, fcer, h,c_const
+REAL(KIND=SGL)::alfa2, alfa4, beta
 REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c
@@ -27,7 +27,7 @@ CALL cpu_time(inicial)
 
 CALL Entrada()
 
- !c=c*c*(dt*dt)/(h*h)
+ c=c*c*(dt*dt)/(h*h)
 
 CALL Dispersao(c,alfa2,alfa4,fcorte,h)
 
@@ -168,7 +168,7 @@ IF(existe_arq) THEN
 
       ALLOCATE(P1(nz,nx),P2(nz,nx),P3(nz,nx),c(nz,nx))
 
-     
+
   ELSE
       WRITE(*,*)'ERRO: arquivo de entrada ', trim(file),' não encontrado!'
       STOP
@@ -180,7 +180,7 @@ IF(existe_arq) THEN
         P2=0.0
         P3=0.0
 
-     !função de Cerjan   
+     !função de Cerjan
       g=Fcerj(g)
 ENDSUBROUTINE Entrada
 
@@ -228,7 +228,7 @@ ENDSUBROUTINE Oneway
 SUBROUTINE Cerjan(g,ncer,P2,P3)
    IMPLICIT NONE
     INTEGER(KIND=SGL)::j
-    INTEGER(KIND=SGL),INTENT(IN):: ncer 
+    INTEGER(KIND=SGL),INTENT(IN):: ncer
     REAL(KIND=SGL),DIMENSION(:),INTENT(IN)::g
     REAL(KIND=SGL),DIMENSION(:,:),INTENT(INOUT)::P2, P3
 
@@ -239,7 +239,7 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
         P3(i,j)=g(i)*P3(i,j)
       ENDDO
     ENDDO
-    
+
 
 ENDSUBROUTINE Cerjan
 
