@@ -8,13 +8,13 @@ PROGRAM Onda2D
 
 ! Declaração de Variáveis Globais
 IMPLICIT NONE
-INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
-INTEGER(KIND=SGL)::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap=0
-INTEGER(KIND=SGL):: ncer
-REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, inicial, final, custocomputacional, dt
-REAL(KIND=SGL)::  xfonte, zfonte, t,fcorte, ampl_fonte, fcer, h,c_const
-REAL(KIND=SGL)::alfa2, alfa4, beta
-REAL(KIND=SGL), PARAMETER::pi=3.1416
+INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=20)
+INTEGER ::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap=0
+INTEGER :: ncer
+REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
+REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fcer, h, at,c_const
+REAL(KIND=SGL)::alfa2, alfa4, beta, fat
+!REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c
 REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE:: g
@@ -27,13 +27,15 @@ CALL cpu_time(inicial)
 
 CALL Entrada()
 
- c=c*c*(dt*dt)/(h*h)
+
+ c=1500.0!Modelo homogêneo e isotrópico
+ c=c*c*(dt*dt)/(h*h) !para fica mais rápido no loop do operador
 
 CALL Dispersao(c,alfa2,alfa4,fcorte,h)
 
-CALL Estabilidade(h,beta,c,DeltaT)
+CALL Estabilidade(h,beta,c)
 
-CALL Explosiva(fcorte, ampl_fonte, t, nt, fonte)
+CALL Explosiva(fcorte, ampl_fonte, t, nt, fonte,dt)
 
 !Cálculo das DF (Stencil)
 DO n=1,nt
@@ -44,16 +46,13 @@ DO n=1,nt
        !P3(i,j,k)=[(DeltaT**2 * c(i,j)**2)/12*h]*[-(P2(i-2,j,k)+P2(i,j-2,k)+P2(i+2,j,k)+P2(i,j+2,k)) + 16*(P2(i-1,j,k)+P2(i,j-1,k)+P2(i+1,j,k)+P2(i,j+1,k))-60*P2(i,j+1,k)] + 2* P2(i,j,k) - P2(i,j,k-1) + (DeltaT**2) * [c(i,j)**2] * rho(i,j) * s(i,j,k) !Quarta ordem
         P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
-    CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
-    CALL Cerjan(g,ncer,P2,P3)
-   ENDDO
+    ENDDO
+  !CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+  !CALL Cerjan(g,ncer,P2,P3)
   CALL Snap()
-  P1(2:nz-1,2:nx-1)=P2(2:nz-1,2:nx-1) !atualiza as temperaturas para continuar a marcha
-  P2(2:nz-1,2:nx-1)=P3(2:nz-1,2:nx-1)
+  P1=P2
+  P2=P3
 ENDDO
-
-OPEN(5,file="P3.txt")
-WRITE(5,*)P3
 
 CALL cpu_time(final)
 custocomputacional=final-inicial
@@ -64,18 +63,21 @@ PRINT*,'*********************** FIM ***************************'
 
 
 CONTAINS
-SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte)
+
+SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte,dt)
+
   IMPLICIT NONE
+
   REAL(KIND=SGL),INTENT(IN)::fcorte, ampl_fonte, t
-  INTEGER(KIND=SGL), INTENT(IN)::  nt
-  INTEGER(KIND=SGL)::nfonte
+  INTEGER, INTENT(IN)::  nt
+  INTEGER :: nfonte
   REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE, INTENT(OUT):: fonte
   REAL(KIND=SGL):: t0, dt, fc
   REAL(KIND=SGL), PARAMETER::pi=3.141593
 
 
   t0 = 2*SQRT(pi)/fcorte
-  fc = fcorte/3*SQRT(pi)
+  fc = fcorte/(3*SQRT(pi))
 
   ALLOCATE(fonte(nt))
 
@@ -83,12 +85,14 @@ SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte)
   nfonte=NINT(2*t0/dt)
 
   DO i=1, nfonte
-    fonte(i)=ampl_fonte*(2*pi*(pi*fc*(i*dt-t0))**2-1.0)*EXP(-pi*(pi*fc*(i*dt-t0))**2)
+    fonte(i)=ampl_fonte*(2*pi*(pi*fc*(i*dt-t0))**2-1.)*EXP(-pi*(pi*fc*(i*dt-t0))**2)
   ENDDO
 
-  OPEN(20,file="fonte.txt")
+  write(*,*) "tempo",dt
+
+  OPEN(30,file="fonte.txt")
   DO i=1,nt
-    WRITE(20,*)i*dt,fonte(i)
+    WRITE(30,*)i*dt,fonte(i)
   ENDDO
 
 ENDSUBROUTINE Explosiva
@@ -126,28 +130,25 @@ IF(existe_arq) THEN
   READ(2,*) nsnap ! número de snapshots
 
   !**********************************************
-  WRITE(*,*)'Parametos lidos:'
-  WRITE(*,*) x     ! comprimento Stencil na direção x (cm)
-  WRITE(*,*) z     ! comprimento Stencil na direção z (cm);
-  WRITE(*,*) t    ! Iteracoes temporais (s);
-  WRITE(*,*) c_const,vp_nome  ! Velocidade de onda p
-  WRITE(*,*) h     ! Espaçamento entre os pontos
-  WRITE(*,*) dt    ! discretizacao temporal (tempo fisico do experimento)
+  WRITE(*,*)'**********************Parametos lidos*****************************'
+  WRITE(*,*) "x = ",x     ! comprimento Stencil na direção x (cm)
+  WRITE(*,*) "z = ",z     ! comprimento Stencil na direção z (cm);
+  WRITE(*,*) "t = ",t    ! Iteracoes temporais (s);
+  WRITE(*,*) "c_const, vp_nome = ",c_const,vp_nome  ! Velocidade de onda p
+  WRITE(*,*) "h = ", h     ! Espaçamento entre os pontos
+  WRITE(*,*) "dt = ",dt    ! discretizacao temporal (tempo fisico do experimento)
   !DADOS DE ENTRADA DA FONTE
-  WRITE(*,*) xfonte ! Posição da fonte na direção horizontal
-  WRITE(*,*) zfonte ! Posição da Fonte em profundidade
-  WRITE(*,*) ampl_fonte ! Amplitude da fonte
-  WRITE(*,*) fcorte ! Frequencia de corte
-  WRITE(*,*) fcer,ncer ! Fator de atenuação
+  WRITE(*,*) "xfonte =" , xfonte ! Posição da fonte na direção horizontal
+  WRITE(*,*) "zfonte =" ,zfonte ! Posição da Fonte em profundidade
+  WRITE(*,*) "ampl_fonte=",ampl_fonte ! Amplitude da fonte
+  WRITE(*,*) "fcorte=",fcorte ! Frequencia de corte
+  WRITE(*,*) "fcer,ncer=", fcer,ncer ! Fator de atenuação
   ! Critérios de Estabilidade e Dispersao
-  WRITE(*,*) alfa2  ! Alfa de segunda ordem
-  WRITE(*,*) alfa4  ! Alfa de quarta ordem
-  WRITE(*,*) beta  ! temperatura na borda direita (°C)
-
-  ! Número de arquivos de saída
-  WRITE(2,*) nsnap ! número de snapshots
-        !c=1500
-        !c=c**2 ! Escrever a eq da Onda2D
+  WRITE(*,*) "alfa2=", alfa2  ! Alfa de segunda ordem
+  WRITE(*,*) "alfa4=", alfa4  ! Alfa de quarta ordem
+  WRITE(*,*) "beta=", beta  ! numero de Iteracoes para levar de 1 para 2
+  WRITE(*,*) "nsnap=", nsnap ! número de snapshots
+  WRITE(*,*)'******************************************************************'
 
       !discretizacao da malha
       nx=nint(x/h)+1
@@ -161,12 +162,14 @@ IF(existe_arq) THEN
       !calculo do passo de tempo entre cada snap
       snap_passos=int(nt/nsnap)
 
-      WRITE(*,*) ""
-      WRITE(*,*) "Parametros numericos:"
+      WRITE(*,*) " "
+      WRITE(*,*) "*******************Parametros numericos**********************"
       WRITE(*,*) "nx,nz,nt = ",nx,nz,nt
-      WRITE(*,*) ""
+      WRITE(*,*) "xifonte,zifonte = ",xifonte,zifonte
+      WRITE(*,*) "*************************************************************"
 
       ALLOCATE(P1(nz,nx),P2(nz,nx),P3(nz,nx),c(nz,nx))
+      ALLOCATE(g(ncer-1))
 
 
   ELSE
@@ -181,7 +184,8 @@ IF(existe_arq) THEN
         P3=0.0
 
      !função de Cerjan
-      g=Fcerj(g)
+     CALL FAT_CERJAN()
+
 ENDSUBROUTINE Entrada
 
 !------------------------------------------------------------------------------------
@@ -194,31 +198,22 @@ SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
   REAL(KIND=SGL), INTENT(IN)::t
   REAL(KIND=SGL), DIMENSION(:,:),ALLOCATABLE,INTENT(INOUT):: P2, P3, c
 
-!ALLOCATE(P2(nz,nx),P3(nz,nx), c(nz,nx))
-
-
-  DeltaX=x/nx
-  DeltaZ=z/nz
-  DeltaT=t/nt
-
-!Condição de contorno (Oneway):
-
 !Borda Direita
-j=Nx !indices i e j trocados em todas. conferir sinais e usar sqrt(c)
+j=nx !indices i e j trocados em todas. conferir sinais e usar sqrt(c)
 DO i=1,nz
-  P3(i,j)= + (c(i,j)*DeltaT/DeltaX) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
+  P3(i,j)= -sqrt(c(i,j)) * (P2(i,j)-P2(i,j-1)) +P2(i,j)
 ENDDO
 
 !Borda Esquerda
 j=1
 DO i=1,nz
-  P3(i,j)= - (c(i,j)*DeltaT/DeltaX) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
+  P3(i,j)= + sqrt(c(i,j)) * (P2(i,j+1)-P2(i,j)) +P2(i,j)
 ENDDO
 
 !Fundo
 i=nz
 DO j=1,nx
-  P3(i,j)= + (c(i,j)*DeltaT/DeltaZ) * (P2(i,j)-P2(i,j-1)) +P2(i,j)
+  P3(i,j)= - sqrt(c(i,j)) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
 ENDDO
 
 ENDSUBROUTINE Oneway
@@ -227,18 +222,34 @@ ENDSUBROUTINE Oneway
 
 SUBROUTINE Cerjan(g,ncer,P2,P3)
    IMPLICIT NONE
-    INTEGER(KIND=SGL)::j
-    INTEGER(KIND=SGL),INTENT(IN):: ncer
-    REAL(KIND=SGL),DIMENSION(:),INTENT(IN)::g
-    REAL(KIND=SGL),DIMENSION(:,:),INTENT(INOUT)::P2, P3
+    INTEGER ::j
+    INTEGER,INTENT(IN):: ncer
+    REAL(KIND=SGL),DIMENSION(ncer),INTENT(IN)::g
+    REAL(KIND=SGL),DIMENSION(nz,nx),INTENT(INOUT)::P2, P3
 
     !Borda esquerda
     DO j= 1, ncer-1
       DO i= 1, nz
-        P2(i,j)=g(i)*P2(i,j)
-        P3(i,j)=g(i)*P3(i,j)
+        P2(i,j)=g(j)*P2(i,j)
+        P3(i,j)=g(j)*P3(i,j)
       ENDDO
     ENDDO
+
+    !Borda direita
+    !DO j= nx-ncer+1, nx
+    !  DO i= 1, nz
+    !    P2(i,j)=g(j)*P2(i,j)
+    !    P3(i,j)=g(j)*P3(i,j)
+    !  ENDDO
+    !ENDDO
+
+    !Fundo
+    !DO j= nz-ncer+1, nz
+    !  DO i= 1, nx
+    !    P2(i,j)=g(j)*P2(i,j)
+    !    P3(i,j)=g(j)*P3(i,j)
+    !  ENDDO
+    !ENDDO
 
 
 ENDSUBROUTINE Cerjan
@@ -247,11 +258,12 @@ ENDSUBROUTINE Cerjan
 
 
 SUBROUTINE Dispersao(c, alfa2, alfa4, fcorte, h)
-  IMPLICIT NONE
-  REAL(KIND=SGL),INTENT(IN), ALLOCATABLE, DIMENSION(:,:)::c
-  REAL(KIND=SGL),INTENT(IN)::alfa2, alfa4, fcorte
-  REAL(KIND=SGL),INTENT(INOUT)::h
 
+  IMPLICIT NONE
+
+  REAL(KIND=SGL),INTENT(IN), DIMENSION(Nz,Nx)::c
+  REAL(KIND=SGL),INTENT(IN):: alfa2, alfa4, fcorte
+  REAL(KIND=SGL),INTENT(IN):: h
 
   !Critério da Não-dispersão de segunda ordem:
   IF (h .LE. (MIN(nz,nx)/alfa2*fcorte)) THEN
@@ -274,14 +286,13 @@ ENDSUBROUTINE Dispersao
 
 !----------------------------------------------------------------------------------
 
-SUBROUTINE Estabilidade(h, beta, c, DeltaT)
+SUBROUTINE Estabilidade(h, beta, c)
   IMPLICIT NONE
-  REAL(KIND=SGL),INTENT(IN), ALLOCATABLE, DIMENSION(:,:)::c
+  REAL(KIND=SGL),INTENT(IN), DIMENSION(Nz,Nx)::c
   REAL(KIND=SGL),INTENT(IN)::beta, h
-  REAL(KIND=SGL),INTENT(OUT)::DeltaT
 
   !Critério de Estabilidade:
-  IF (DeltaT .LE. (h/beta*MAX(nz,nx))) THEN
+  IF (Dt .LE. (h/beta*MAX(nz,nx))) THEN
       PRINT*,'ESTÁVEL'
   ELSE
       PRINT*,'INSTÁVEL'
@@ -295,7 +306,7 @@ ENDSUBROUTINE Estabilidade
 SUBROUTINE Snap()
 
   !calculo do passo de tempo entre cada snap
-  snap_passos=int(nt/nsnap)
+  snap_passos=INT(nt/nsnap)
 
 IF(MOD(n,snap_passos)==0)THEN !imprime os snapsshots de nsnap em nsnaps passos! MOD é uma intrínseca que devolve o resto de l na divisão por nsnap, ambos os argumentos sendo do mesmo tipo (l-INT(l/nsnap) * nsnap)
   csnap=csnap+1
@@ -328,21 +339,18 @@ ENDSUBROUTINE Modelo
 
 !%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FUNÇÕES UTILIZADAS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-REAL FUNCTION Fcerj(g)
-     IMPLICIT NONE
-     REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE:: g
-      REAL(KIND=SGL)::fat
-      INTEGER(KIND=SGL), PARAMETER::ncer=100
-      INTEGER(KIND=SGL)::i
-       ALLOCATE(g(ncer-1))
-        !Cálculo do função de atenuação de Cerjan:
-      DO i=1,ncer-1
-        !Fcerj(i)=EXP(-(fat*(ncerj-i))**2)
-        g(i)=EXP(-(fat*(ncer-i))**2)!OLHAR NO EXCEL
-      ENDDO
+SUBROUTINE FAT_CERJAN()
 
-  RETURN
-END FUNCTION Fcerj
+     IMPLICIT NONE
+     open(20,file="cerjan.txt")
+     !Cálculo do função de atenuação de Cerjan:
+     DO i=1,ncer-1
+        g(i)=EXP(-(fcer*(ncer-i))**2)!OLHAR NO EXCEL
+    	WRITE(20,*) i,g(i)
+     ENDDO
+     CLOSE(20)
+
+END SUBROUTINE
 
 
 END PROGRAM Onda2D
