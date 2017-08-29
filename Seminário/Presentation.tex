@@ -14,7 +14,7 @@
 \usepackage{smartdiagram}
 \usepackage{graphicx} % Required for including images
 \usepackage{graphics}
-\graphicspath{{figures/}} % Location of the graphics files
+\graphicspath{{Imagens/}} % Location of the graphics files
 \usepackage{booktabs} % Top and bottom rules for table
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
@@ -25,6 +25,14 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{times}
+%\usepackage{movie15}%pacote para acrescentar vídeos
+%\usepackage{multimedia}
+%\usepackage{media9}%pacote de vídeos em formato mp4
+%\usepackage{flashmovie}%outro pacote para inserir vídeos
+%\usepackage{graphicx} %The mode "LaTeX => PDF" allows the following formats: .jpg  .png  .pdf  .mps
+%\graphicspath{{/Imagens}} %Where the figures folder is located
+%\usepackage{media9}
+%\addmediapath{/Imagens}
 \usepackage{makeidx}
 \usepackage{lipsum} % Required to insert dummy text. To be removed otherwise
 \usepackage{epstopdf}%adiciona imagens em formato eps no pdf.
@@ -166,6 +174,15 @@
 \section{Controle de Versão}
 
 \begin{frame}
+\frametitle{Controle de Versão}
+\transboxin
+
+\end{frame}
+
+
+
+
+\begin{frame}
 	\frametitle{Controle de Versão}
 	\transboxin%efeito de transição	
 	\begin{block}{Definição:}
@@ -214,7 +231,77 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Cerjan}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------RESULTADO---------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resultado final}
 
+
+%  \begin{frame}
+%    \begin{center}
+%       \flashmovie[width=10cm]{Imagens/temporal.swf} 
+%    \end{center}
+%  \end{frame}
+
+
+%\begin{frame}
+%
+%\centering % Para centralizarmos o vídeo
+%\includemedia[
+%label=nome_qualquer, % ! Importante para linkar o vídeo ao botão (ver abaixo)
+%width=0.8\linewidth, height=0.5\linewidth, % Dimensões
+%addresource=Imagens/temporal.swf, % ESTE É O SEU ARQUIVO DE VÍDEO (mesmo dir.)
+%transparent, % Opções para que o player tenha transparência
+%activate=pageopen, % Se você deseja que o vídeo esteja "carregado" ao abrir a página
+%flashvars={
+%source=Imagens/temporal.swf
+%&loop=false % Se você quer que o vídeo repita automaticamente 
+%&scaleMode=letterbox % Manter proporções (dimensionais) do vídeo
+%}
+%]{}{VPlayer.swf}
+%\vspace{1cm} % Espaçamento entre vídeo e botão
+%
+%% Agora, você cria o botão para dar play/pause. Neste caso, o botão é apenas a letra "pi".
+%
+%\mediabutton[
+%mediacommand=nome_qualquer:playPause,
+%overface=\color{black}{{\strut $\pi$}},
+%downface=\color{gray}{{\strut $\pi$}}
+%]{{\strut $\pi$}}
+%
+%\end{frame}
+
+%\begin{frame}
+%\begin{figure}[h!]
+%\centering    
+%\movie[label=show3,width=1.0\textwidth,poster
+%       ,autostart,showcontrols,loop] 
+%  {\includegraphics[width=1.0\textwidth]{/snap1.png}}{temporal.mp4}
+%  \caption{caption}
+% \end{figure} 
+%\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Forward Kinematics}
+%
+%\begin{center}
+%\includemedia[
+%    activate=onclick,
+%    width=0.75\textwidth
+%]{\includegraphics{Imagens/snap1.png}}{Imagens/temporal.swf}
+%\end{center}
+%\end{frame}
+%\begin{frame}
+%
+%\includemedia[width=0.6\linewidth,height=0.6\linewidth,activate=pageopen,
+%passcontext,
+%transparent,
+%addresource=Imagens/temporal.mp4,
+%flashvars={source=Imagens/temporal.mp4}
+%]{\includegraphics[width=0.6\linewidth]{Imagens/snap1.png}}{Imagens/temporal.swf}
+%
+%\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %-----------------------------BIBLIORGRAFIA---------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

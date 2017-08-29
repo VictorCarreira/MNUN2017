@@ -11,9 +11,9 @@ IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=20)
 INTEGER ::i, j, n, nx, nz, nt, x, z, snap_passos, xifonte, zifonte, nsnap, csnap=0
 INTEGER :: ncer
-REAL(KIND=SGL)::DeltaT, DeltaX, DeltaZ, rho, inicial, final, custocomputacional, dt
-REAL(KIND=SGL)::  xfonte, zfonte, t, t0,td ,fc ,fcorte, ampl_fonte, fcer, h, at,c_const
-REAL(KIND=SGL)::alfa2, alfa4, beta, fat
+REAL(KIND=SGL):: inicial, final, custocomputacional, dt
+REAL(KIND=SGL)::  xfonte, zfonte, t ,fcorte, ampl_fonte, fcer, h, c_const
+REAL(KIND=SGL)::alfa2, alfa4, beta
 !REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c
@@ -40,15 +40,15 @@ CALL Explosiva(fcorte, ampl_fonte, t, nt, fonte,dt)
 !Cálculo das DF (Stencil)
 DO n=1,nt
   P1(zifonte,xifonte)=P1(zifonte,xifonte)-fonte(n)
-  IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avan�o no tempo de 50 em 50 passos
+  IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avanço no tempo de 50 em 50 passos
     DO j=2,nx-1!dimensão lenta
       DO i=2,nz-1!dimensão rápida
        !P3(i,j,k)=[(DeltaT**2 * c(i,j)**2)/12*h]*[-(P2(i-2,j,k)+P2(i,j-2,k)+P2(i+2,j,k)+P2(i,j+2,k)) + 16*(P2(i-1,j,k)+P2(i,j-1,k)+P2(i+1,j,k)+P2(i,j+1,k))-60*P2(i,j+1,k)] + 2* P2(i,j,k) - P2(i,j,k-1) + (DeltaT**2) * [c(i,j)**2] * rho(i,j) * s(i,j,k) !Quarta ordem
         P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
     ENDDO
-  !CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
-  !CALL Cerjan(g,ncer,P2,P3)
+  CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+  CALL Cerjan(g,ncer,P2,P3)
   CALL Snap()
   P1=P2
   P2=P3
