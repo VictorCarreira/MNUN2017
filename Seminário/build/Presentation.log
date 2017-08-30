@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.22)  29 AUG 2017 15:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.22)  30 AUG 2017 19:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1384,134 +1384,12 @@ File: uni-global.def 2013/05/13 UCS: Unicode global data
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
 )
-(/usr/share/texlive/texmf-dist/tex/latex/media9/media9.sty
-(/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3regex.sty
-Package: l3regex 2016/01/19 v6377 L3 Experimental regular expressions
-
-(/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3tl-build.sty
-Package: l3tl-build 2016/01/19 v6377 L3 Experimental token list construction
-\l__tl_build_start_index_int=\count268
-\l__tl_build_index_int=\count269
-)
-(/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3tl-analysis.sty
-Package: l3tl-analysis 2015/11/09 v6244 L3 Experimental token lists analysis
-\l__tl_analysis_normal_int=\count270
-\l__tl_analysis_index_int=\count271
-\l__tl_analysis_nesting_int=\count272
-\l__tl_analysis_type_int=\count273
-) (/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3flag.sty
-Package: l3flag 2016/01/19 v6377 L3 Experimental flags
-)
-(/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3str-convert.sty
-Package: l3str-convert 2015/09/26 v6106 L3 Experimental string encoding convers
-ions
-\l__str_internal_int=\count274
-\c__str_replacement_char_int=\count275
-)
-\l__regex_internal_a_int=\count276
-\l__regex_internal_b_int=\count277
-\l__regex_internal_c_int=\count278
-\l__regex_balance_int=\count279
-\l__regex_group_level_int=\count280
-\l__regex_mode_int=\count281
-\l__regex_catcodes_int=\count282
-\l__regex_default_catcodes_int=\count283
-\c__regex_catcode_D_int=\count284
-\c__regex_catcode_S_int=\count285
-\c__regex_catcode_L_int=\count286
-\c__regex_catcode_O_int=\count287
-\c__regex_catcode_A_int=\count288
-\c__regex_all_catcodes_int=\count289
-\l__regex_show_lines_int=\count290
-\l__regex_min_state_int=\count291
-\l__regex_max_state_int=\count292
-\l__regex_left_state_int=\count293
-\l__regex_right_state_int=\count294
-\l__regex_capturing_group_int=\count295
-\l__regex_min_pos_int=\count296
-\l__regex_max_pos_int=\count297
-\l__regex_current_pos_int=\count298
-\l__regex_start_pos_int=\count299
-\l__regex_success_pos_int=\count300
-\l__regex_current_char_int=\count301
-\l__regex_current_catcode_int=\count302
-\l__regex_last_char_int=\count303
-\l__regex_case_changed_char_int=\count304
-\l__regex_current_state_int=\count305
-\l__regex_step_int=\count306
-\l__regex_min_active_int=\count307
-\l__regex_max_active_int=\count308
-\l__regex_replacement_csnames_int=\count309
-\l__regex_match_count_int=\count310
-\l__regex_submatch_int=\count311
-\l__regex_zeroth_submatch_int=\count312
-) (/usr/share/texlive/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
-Package: l3keys2e 2016/01/19 v6377 LaTeX2e option processing using LaTeX3 keys
-)
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/atenddvi.sty
-Package: atenddvi 2007/04/17 v1.1 At end DVI hook (HO)
-
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/zref-abspage.sty
-Package: zref-abspage 2012/04/04 v2.24 Module abspage for zref (HO)
-
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/zref-base.sty
-Package: zref-base 2012/04/04 v2.24 Module base for zref (HO)
-Package zref Info: New property list: main on input line 759.
-Package zref Info: New property: default on input line 760.
-Package zref Info: New property: page on input line 761.
-)
-\c@abspage=\count313
-Package zref Info: New property: abspage on input line 62.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/zref-lastpage.sty
-Package: zref-lastpage 2012/04/04 v2.24 Module lastpage for zref (HO)
-Package zref Info: New property list: LastPage on input line 55.
-))
-Package: media9 2016/03/11 v0.67 acrobat-9/X compatible media
-\g_mix_pkgresizeflag_int=\count314
-
-(/usr/share/texlive/texmf-dist/tex/latex/media9/pdfbase.sty
-Package: pdfbase 2016/03/11 v0.7 driver independent access to low-level PDF fea
-tures
-\g_pbs_oc_int=\count315
-)
-(/usr/share/texlive/texmf-dist/tex/latex/ocgx2/ocgbase.sty
-Package: ocgbase 2016/03/11 v0.6 support package for ocgx2.sty
-)
-\l_mix_poster_box=\box78
-\g_mix_wd_dim=\dimen309
-\g_mix_ht_dim=\dimen310
-\g_mix_dp_dim=\dimen311
-\g_mix_rmcnt_int=\count316
-\l_mix_viewcnt_int=\count317
-\g@mix@page@int=\count318
-\g_mix_resizeflag_int=\count319
-\l_mix_lineno_int=\count320
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \addmediapath with sig. 'm' on line 818.
-.................................................
-\l_mix_pbtn_box=\box79
-\mix@btn@dim=\dimen312
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \includemedia with sig. 'O{}mm' on line 1210.
-.................................................
-\g_mix_mbtncnt_int=\count321
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \mediabutton with sig. 'O{}m' on line 2416.
-.................................................
-)
 (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
 Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
 )
 (/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.sty
 Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
-\c@lips@count=\count322
+\c@lips@count=\count268
 )
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf.sty
 Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
@@ -1535,14 +1413,14 @@ e
 Package: subfigure 2002/03/15 v2.1.5 subfigure package
 \subfigtopskip=\skip65
 \subfigcapskip=\skip66
-\subfigcaptopadj=\dimen313
+\subfigcaptopadj=\dimen309
 \subfigbottomskip=\skip67
-\subfigcapmargin=\dimen314
+\subfigcapmargin=\dimen310
 \subfiglabelskip=\skip68
-\c@subfigure=\count323
-\c@lofdepth=\count324
-\c@subtable=\count325
-\c@lotdepth=\count326
+\c@subfigure=\count269
+\c@lofdepth=\count270
+\c@subtable=\count271
+\c@lotdepth=\count272
 
 ****************************************
 * Local config file subfigure.cfg used *
@@ -1553,11 +1431,11 @@ Package: subfigure 2002/03/15 v2.1.5 subfigure package
 )
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count327
+\c@float@type=\count273
 \float@exts=\toks51
-\float@box=\box80
+\float@box=\box78
 \@float@everytoks=\toks52
-\@floatcapt=\box81
+\@floatcapt=\box79
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 43.
 Package hyperref Info: Option `breaklinks' set `true' on input line 43.
@@ -1652,19 +1530,19 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count328
-\scratchdimen=\dimen315
-\scratchbox=\box82
-\nofMPsegments=\count329
-\nofMParguments=\count330
+\scratchcounter=\count274
+\scratchdimen=\dimen311
+\scratchbox=\box80
+\nofMPsegments=\count275
+\nofMParguments=\count276
 \everyMPshowfont=\toks55
-\MPscratchCnt=\count331
-\MPscratchDim=\dimen316
-\MPnumerator=\count332
-\makeMPintoPDFobject=\count333
+\MPscratchCnt=\count277
+\MPscratchDim=\dimen312
+\MPnumerator=\count278
+\makeMPintoPDFobject=\count279
 \everyMPtoPDFconversion=\toks56
 ) ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box83
+\AtBeginShipoutBox=\box81
 Package hyperref Info: Link coloring ON on input line 80.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -1673,7 +1551,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count334
+\c@section@level=\count280
 )
 LaTeX Info: Redefining \ref on input line 80.
 LaTeX Info: Redefining \pageref on input line 80.
@@ -1859,100 +1737,180 @@ Package pdftex.def Info: Imagens/logon.jpg used on input line 174.
 
 [11
 
-]
+] <Imagens/pensador.png, id=375, 284.38245pt x 369.66106pt>
+File: Imagens/pensador.png Graphic file (type png)
+
+<use Imagens/pensador.png>
+Package pdftex.def Info: Imagens/pensador.png used on input line 187.
+(pdftex.def)             Requested size: 85.31538pt x 110.89917pt.
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
 Package pdftex.def Info: Imagens/logon.jpg used on input line 187.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [12
 
-]
+ <./Imagens/pensador.png>] <Imagens/versao_caso1.png, id=403, 430.84966pt x 94.
+6737pt>
+File: Imagens/versao_caso1.png Graphic file (type png)
+
+<use Imagens/versao_caso1.png>
+Package pdftex.def Info: Imagens/versao_caso1.png used on input line 200.
+(pdftex.def)             Requested size: 129.25589pt x 28.40231pt.
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 187.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 200.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [13
 
-]
-File: Imagens/logon.jpg Graphic file (type jpg)
+ <./Imagens/versao_caso1.png>] <Imagens/versao_caso2.png, id=431, 496.4949pt x 
+156.22365pt>
+File: Imagens/versao_caso2.png Graphic file (type png)
 
-<use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 187.
+<use Imagens/versao_caso2.png>
+Package pdftex.def Info: Imagens/versao_caso2.png used on input line 213.
+(pdftex.def)             Requested size: 148.94962pt x 46.86745pt.
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 213.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [14
 
-]
+ <./Imagens/versao_caso2.png>] <Imagens/versao_caso3.png, id=458, 509.9853pt x 
+260.77425pt>
+File: Imagens/versao_caso3.png Graphic file (type png)
+
+<use Imagens/versao_caso3.png>
+Package pdftex.def Info: Imagens/versao_caso3.png used on input line 226.
+(pdftex.def)             Requested size: 152.99677pt x 78.23286pt.
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 197.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 226.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [15
 
-]
-(build/Presentation.toc)
+ <./Imagens/versao_caso3.png>] <Imagens/versao_caso4.png, id=486, 569.2467pt x 
+365.2044pt>
+File: Imagens/versao_caso4.png Graphic file (type png)
+
+<use Imagens/versao_caso4.png>
+Package pdftex.def Info: Imagens/versao_caso4.png used on input line 239.
+(pdftex.def)             Requested size: 170.77533pt x 109.56216pt.
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 203.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 239.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [16
 
-] (build/Presentation.toc)
-File: Imagens/logon.jpg Graphic file (type jpg)
+ <./Imagens/versao_caso4.png>] <Imagens/versao_caso5.png, id=513, 609.2361pt x 
+469.755pt>
+File: Imagens/versao_caso5.png Graphic file (type png)
 
-<use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 209.
+<use Imagens/versao_caso5.png>
+Package pdftex.def Info: Imagens/versao_caso5.png used on input line 252.
+(pdftex.def)             Requested size: 182.77223pt x 140.92758pt.
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 252.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [17
 
-]
+ <./Imagens/versao_caso5.png>] <Imagens/versao_caso6.png, id=540, 720.0501pt x 
+574.90785pt>
+File: Imagens/versao_caso6.png Graphic file (type png)
+
+<use Imagens/versao_caso6.png>
+Package pdftex.def Info: Imagens/versao_caso6.png used on input line 265.
+(pdftex.def)             Requested size: 216.0167pt x 172.47368pt.
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 218.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 265.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [18
 
-]
-(build/Presentation.toc)
+ <./Imagens/versao_caso6.png>] <Imagens/versao_caso7.png, id=567, 861.09705pt x
+ 679.338pt>
+File: Imagens/versao_caso7.png Graphic file (type png)
+
+<use Imagens/versao_caso7.png>
+Package pdftex.def Info: Imagens/versao_caso7.png used on input line 277.
+(pdftex.def)             Requested size: 258.3311pt x 203.80296pt.
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 223.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 277.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [19
 
-] (build/Presentation.toc)
+ <./Imagens/versao_caso7.png>]
 File: Imagens/logon.jpg Graphic file (type jpg)
-
-<use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 228.
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 291.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [20
 
 ] (build/Presentation.toc)
 File: Imagens/logon.jpg Graphic file (type jpg)
+
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 299.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [21
+
+] (build/Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 300.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 305.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
 
-[21
+[22
+
+]
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 314.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [23
+
+] (build/Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
+
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 319.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [24
+
+] (build/Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 324.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+
+[25
+
+] (build/Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 396.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [26
 
 ]
 No file Presentation.bbl.
 File: Imagens/logon.jpg Graphic file (type jpg)
 <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 307.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 403.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
- [22
+ [27
 
 ]
 File: Imagens/logonvertical.jpg Graphic file (type jpg)
  <use Imagens/logonvertical.jpg>
-Package pdftex.def Info: Imagens/logonvertical.jpg used on input line 328.
+Package pdftex.def Info: Imagens/logonvertical.jpg used on input line 424.
 (pdftex.def)             Requested size: 86.24197pt x 73.4743pt.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 328.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 424.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [23
+) [28
 
 ]
 \tf@nav=\write7
@@ -1964,49 +1922,33 @@ File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 \tf@snm=\write9
 \openout9 = `Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 330.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 330.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 426.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 426.
 
-(build/Presentation.aux
-
-Package atenddvi Warning: Rerun LaTeX, last page not yet found.
-
-*************************************************
-* media9 warning: "rerun"
-* 
-* Rerun to get internal references right!
-*************************************************
-)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 330.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 330.
+(build/Presentation.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 426.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 426.
 Package rerunfilecheck Info: File `Presentation.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 330.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 426.
  ) 
 Here is how much of TeX's memory you used:
- 33244 strings out of 493029
- 659579 string characters out of 6136234
- 831878 words of memory out of 5000000
- 36038 multiletter control sequences out of 15000+600000
+ 31355 strings out of 493029
+ 614226 string characters out of 6136234
+ 778124 words of memory out of 5000000
+ 34174 multiletter control sequences out of 15000+600000
  49559 words of font info for 68 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
  58i,14n,75p,10441b,663s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Navigation24} has been referenced but does not ex
-ist, replaced by a fixed one
-
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/font
-s/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
-es/utmri8a.pfb>
-Output written on build/Presentation.pdf (23 pages, 319295 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on build/Presentation.pdf (28 pages, 2517413 bytes).
 PDF statistics:
- 741 PDF objects out of 1000 (max. 8388607)
- 679 compressed objects within 7 object streams
- 55 named destinations out of 1000 (max. 500000)
- 217 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 886 PDF objects out of 1000 (max. 8388607)
+ 801 compressed objects within 9 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 257 words of extra memory for PDF output out of 10000 (max. 10000000)
 

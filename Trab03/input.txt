@@ -8,7 +8,7 @@
 750       # Posicao da fonte na posição vertical, zfonte
 10       # Amplitude da fonte, ampl_fonte
 60       # Frequencia de corte, fcorte
-2.50E-4,100  # Frequencia de atenuação e número de cerjan, fcer, ncer
+1.50E-3,100  # Frequencia de atenuação e número de cerjan, fcer, ncer
 5        # Criterio de dispersao de segunda ordem, alfa2
 10       # Criterio de dispersao quarta ordem , alfa4
 4        # numero de Iteracoes para levar de 1 para 2, beta

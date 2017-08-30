@@ -17,7 +17,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="Controle de versão.svg"
-   inkscape:export-filename="/home/carreira/Documentos/MNUN2017/Seminário/Imagens/versao_caso1.png"
+   inkscape:export-filename="/home/carreira/Documentos/MNUN2017/Seminário/Imagens/versao_caso7.png"
    inkscape:export-xdpi="600"
    inkscape:export-ydpi="600">
   <defs
@@ -30,10 +30,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="426.46992"
-     inkscape:cy="465.17132"
+     inkscape:cx="447.1842"
+     inkscape:cy="293.74275"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer6"
      showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1056"
@@ -100,7 +100,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="caso 2"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <text
        xml:space="preserve"
@@ -113,7 +113,7 @@
          id="tspan4156-7"
          x="484.14725"
          y="452.17191"
-         style="font-size:27.5px">Dados_old.dat</tspan></text>
+         style="font-size:27.5px">Dados_nova.dat</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 360,322.3622 0,130 115,0"
@@ -124,7 +124,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="caso 3"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <text
        xml:space="preserve"
@@ -137,7 +137,7 @@
          id="tspan4156-7-3"
          x="483.42859"
          y="582.34912"
-         style="font-size:27.5px">Dados_old2.dat</tspan></text>
+         style="font-size:27.5px">Dados_nova2.dat</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 359.99931,452.83938 0,130 115,0"
@@ -148,7 +148,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="caso 4"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -166,13 +166,13 @@
          id="tspan4156-7-3-5"
          x="484.18747"
          y="712.34912"
-         style="font-size:27.5px">Dados_old2_final.dat</tspan></text>
+         style="font-size:27.5px">Dados_nova2_final.dat</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="caso 5"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -190,13 +190,13 @@
          id="tspan4156-7-3-5-6"
          x="483.92749"
          y="842.55835"
-         style="font-size:27.5px">Dados_old2_final_V2.dat</tspan></text>
+         style="font-size:27.5px">Dados_nova2_final_V2.dat</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="caso 6"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -214,13 +214,13 @@
          id="tspan4156-7-3-5-6-1"
          x="483.57724"
          y="973.56848"
-         style="font-size:27.5px">Dados_old2_final_V2_Use_Este.dat</tspan></text>
+         style="font-size:27.5px">Dados_nova2_final_V2_Use_Este.dat</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="caso 7"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <text
        xml:space="preserve"
@@ -233,7 +233,7 @@
          id="tspan4156-7-3-5-6-1-0"
          x="484.2915"
          y="1103.5685"
-         style="font-size:27.5px">Dados_old2_final_V2_Use_Este_Agora_e_este_mesmo.dat</tspan></text>
+         style="font-size:27.5px">Dados_nova2_final_V2_Agora_é_este_mesmo.dat</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 359.9974,974.48959 0,130.00011 115,0"

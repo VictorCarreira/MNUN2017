@@ -193,7 +193,7 @@ ENDSUBROUTINE Entrada
 
 SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
   IMPLICIT NONE
-  INTEGER(KIND=SGL),INTENT(IN)::nx,nz,nt,x,Z
+  INTEGER(KIND=SGL),INTENT(IN)::nx,nz,nt,x,z
   INTEGER(KIND=SGL)::i,j
   REAL(KIND=SGL), INTENT(IN)::t
   REAL(KIND=SGL), DIMENSION(:,:),ALLOCATABLE,INTENT(INOUT):: P2, P3, c
@@ -222,7 +222,7 @@ ENDSUBROUTINE Oneway
 
 SUBROUTINE Cerjan(g,ncer,P2,P3)
    IMPLICIT NONE
-    INTEGER ::j
+    INTEGER ::i,j
     INTEGER,INTENT(IN):: ncer
     REAL(KIND=SGL),DIMENSION(ncer),INTENT(IN)::g
     REAL(KIND=SGL),DIMENSION(nz,nx),INTENT(INOUT)::P2, P3
@@ -236,7 +236,7 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
     ENDDO
 
     !Borda direita
-    !DO j= nx-ncer+1, nx
+    !DO j= nx-ncer-1, nx
     !  DO i= 1, nz
     !    P2(i,j)=g(j)*P2(i,j)
     !    P3(i,j)=g(j)*P3(i,j)
@@ -244,12 +244,12 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
     !ENDDO
 
     !Fundo
-    !DO j= nz-ncer+1, nz
-    !  DO i= 1, nx
-    !    P2(i,j)=g(j)*P2(i,j)
-    !    P3(i,j)=g(j)*P3(i,j)
-    !  ENDDO
-    !ENDDO
+    DO j= nz-ncer-1, nz
+      DO i= 1, nx
+        P2(i,j)=g(j)*P2(i,j)
+        P3(i,j)=g(j)*P3(i,j)
+      ENDDO
+    ENDDO
 
 
 ENDSUBROUTINE Cerjan
@@ -342,7 +342,7 @@ ENDSUBROUTINE Modelo
 SUBROUTINE FAT_CERJAN()
 
      IMPLICIT NONE
-     open(20,file="cerjan.txt")
+     OPEN(20,file="cerjan.txt")
      !Cálculo do função de atenuação de Cerjan:
      DO i=1,ncer-1
         g(i)=EXP(-(fcer*(ncer-i))**2)!OLHAR NO EXCEL
