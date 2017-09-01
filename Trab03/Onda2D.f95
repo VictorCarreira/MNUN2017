@@ -227,6 +227,7 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
     REAL(KIND=SGL),DIMENSION(ncer),INTENT(IN)::g
     REAL(KIND=SGL),DIMENSION(nz,nx),INTENT(INOUT)::P2, P3
 
+
     !Borda esquerda
     DO j= 1, ncer-1
       DO i= 1, nz
@@ -235,21 +236,25 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
       ENDDO
     ENDDO
 
+    !k=100
     !Borda direita
     !DO j= nx-ncer-1, nx
     !  DO i= 1, nz
-    !    P2(i,j)=g(j)*P2(i,j)
-    !    P3(i,j)=g(j)*P3(i,j)
+    !    P2(i,j)=g(k)*P2(i,j)
+    !    P3(i,j)=g(k)*P3(i,j)
     !  ENDDO
+    !    k=k-1
     !ENDDO
 
     !Fundo
-    DO j= nz-ncer-1, nz
-      DO i= 1, nx
-        P2(i,j)=g(j)*P2(i,j)
-        P3(i,j)=g(j)*P3(i,j)
-      ENDDO
-    ENDDO
+
+    !DO j= nz-ncer-1, nz
+    !  DO i= 1, nx
+    !    P2(i,j)=g(k)*P2(i,j)
+    !    P3(i,j)=g(k)*P3(i,j)
+    !  ENDDO
+    !  k=k-1
+    !ENDDO
 
 
 ENDSUBROUTINE Cerjan
