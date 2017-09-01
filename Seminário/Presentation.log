@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.22)  31 AUG 2017 22:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.25)  1 SEP 2017 02:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2200,24 +2200,30 @@ Package pdftex.def Info: Imagens/logon.jpg used on input line 616.
  [43
 
  <./Imagens/fonte.png>]
-<Imagens/Snap001.png, id=1273, 1839.87375pt x 1037.8775pt>
+<Imagens/Snap001.png, id=1273, 1842.885pt x 1001.30086pt>
 File: Imagens/Snap001.png Graphic file (type png)
 
 <use Imagens/Snap001.png>
 Package pdftex.def Info: Imagens/Snap001.png used on input line 627.
-(pdftex.def)             Requested size: 275.96915pt x 155.67491pt.
+(pdftex.def)             Requested size: 331.70499pt x 180.22638pt.
+
+Overfull \hbox (24.41512pt too wide) in paragraph at lines 627--627
+ [] 
+ []
+
 File: Imagens/logon.jpg Graphic file (type jpg)
- <use Imagens/logon.jpg>
+<use Imagens/logon.jpg>
 Package pdftex.def Info: Imagens/logon.jpg used on input line 627.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [44
 
- <./Imagens/Snap001.png (PNG copy)>]
+ <./Imagens/Snap001.png>]
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
 Package pdftex.def Info: Imagens/logon.jpg used on input line 644.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
- [45
+
+[45
 
 ]
 File: Imagens/logon.jpg Graphic file (type jpg)
@@ -2228,68 +2234,211 @@ Package pdftex.def Info: Imagens/logon.jpg used on input line 644.
 
 ]
 File: Imagens/logon.jpg Graphic file (type jpg)
-
-<use Imagens/logon.jpg>
+ <use Imagens/logon.jpg>
 Package pdftex.def Info: Imagens/logon.jpg used on input line 644.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [47
 
 ]
+<Imagens/Snap006.png, id=1376, 1853.7255pt x 1002.6258pt>
+File: Imagens/Snap006.png Graphic file (type png)
+
+<use Imagens/Snap006.png>
+Package pdftex.def Info: Imagens/Snap006.png used on input line 655.
+(pdftex.def)             Requested size: 333.65619pt x 180.46486pt.
+
+Overfull \hbox (26.36632pt too wide) in paragraph at lines 655--655
+ [] 
+ []
+
 File: Imagens/logon.jpg Graphic file (type jpg)
- <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 656.
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 655.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [48
+
+ <./Imagens/Snap006.png>]
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 688.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+
+[49
+
+]
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 688.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [50
+
+]
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 688.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [51
 
 ]
 File: Imagens/logon.jpg Graphic file (type jpg)
 
 <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 656.
-(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
- [49
-
-] (./Presentation.toc)
-File: Imagens/logon.jpg Graphic file (type jpg)
- <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 661.
-(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
-
-[50
-
-] (./Presentation.toc)
-File: Imagens/logon.jpg Graphic file (type jpg)
- <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 666.
-(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
- [51
-
-] (./Presentation.toc)
-File: Imagens/logon.jpg Graphic file (type jpg)
-
-<use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 738.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 727.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
  [52
 
-] (./Presentation.bbl)
+]
+<Imagens/Snap007.png, id=1505, 1843.48724pt x 1001.54175pt>
+File: Imagens/Snap007.png Graphic file (type png)
+
+<use Imagens/Snap007.png>
+Package pdftex.def Info: Imagens/Snap007.png used on input line 739.
+(pdftex.def)             Requested size: 331.81339pt x 180.26973pt.
+
+Overfull \hbox (24.52351pt too wide) in paragraph at lines 739--739
+ [] 
+ []
+
+File: Imagens/logon.jpg Graphic file (type jpg)
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 739.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [53
+
+ <./Imagens/Snap007.png>] (./Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
+
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 744.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [54
+
+]
+<Imagens/cerjan.png, id=1564, 1806.75pt x 722.7pt>
+File: Imagens/cerjan.png Graphic file (type png)
+ <use Imagens/cerjan.png>
+Package pdftex.def Info: Imagens/cerjan.png used on input line 762.
+(pdftex.def)             Requested size: 361.3436pt x 144.53743pt.
+
+Overfull \hbox (54.05373pt too wide) in paragraph at lines 762--762
+ [] 
+ []
+
+
+Overfull \vbox (19.11682pt too high) detected at line 762
+ []
+
+File: Imagens/logon.jpg Graphic file (type jpg)
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 762.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [55
+
+ <./Imagens/cerjan.png>]
+File: Imagens/cerjan.png Graphic file (type png)
+ <use Imagens/cerjan.png>
+Package pdftex.def Info: Imagens/cerjan.png used on input line 762.
+(pdftex.def)             Requested size: 361.3436pt x 144.53743pt.
+
+Overfull \hbox (54.05373pt too wide) in paragraph at lines 762--762
+ [] 
+ []
+
+
+Overfull \vbox (19.11682pt too high) detected at line 762
+ []
+
+File: Imagens/logon.jpg Graphic file (type jpg)
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 762.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [56
+
+]
 File: Imagens/logon.jpg Graphic file (type jpg)
  <use Imagens/logon.jpg>
-Package pdftex.def Info: Imagens/logon.jpg used on input line 745.
+Package pdftex.def Info: Imagens/logon.jpg used on input line 789.
 (pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [57
 
-[53
+]
+File: Imagens/logon.jpg Graphic file (type jpg)
+
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 817.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [58
+
+]
+<Imagens/Snap007cerjan.png, id=1668, 1843.48724pt x 1001.30086pt>
+File: Imagens/Snap007cerjan.png Graphic file (type png)
+
+<use Imagens/Snap007cerjan.png>
+Package pdftex.def Info: Imagens/Snap007cerjan.png used on input line 831.
+(pdftex.def)             Requested size: 331.81339pt x 180.22638pt.
+
+Overfull \hbox (24.52351pt too wide) in paragraph at lines 831--831
+ [] 
+ []
+
+File: Imagens/logon.jpg Graphic file (type jpg)
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 831.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [59
+
+ <./Imagens/Snap007cerjan.png>] (./Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 836.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [60
+
+]
+<Imagens/Snap007cerjeoneway.png, id=1727, 1844.3304pt x 999.9759pt>
+File: Imagens/Snap007cerjeoneway.png Graphic file (type png)
+
+<use Imagens/Snap007cerjeoneway.png>
+Package pdftex.def Info: Imagens/Snap007cerjeoneway.png used on input line 848.
+
+(pdftex.def)             Requested size: 331.96515pt x 179.98788pt.
+
+Overfull \hbox (24.67528pt too wide) in paragraph at lines 848--848
+ [] 
+ []
+
+File: Imagens/logon.jpg Graphic file (type jpg)
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 848.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [61
+
+ <./Imagens/Snap007cerjeoneway.png>]
+(./Presentation.toc)
+File: Imagens/logon.jpg Graphic file (type jpg)
+ <use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 853.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [62
+
+] (./Presentation.bbl)
+File: Imagens/logon.jpg Graphic file (type jpg)
+
+<use Imagens/logon.jpg>
+Package pdftex.def Info: Imagens/logon.jpg used on input line 860.
+(pdftex.def)             Requested size: 74.27982pt x 28.45274pt.
+ [63
 
 ]
 File: Imagens/logonvertical.jpg Graphic file (type jpg)
  <use Imagens/logonvertical.jpg>
-Package pdftex.def Info: Imagens/logonvertical.jpg used on input line 766.
+Package pdftex.def Info: Imagens/logonvertical.jpg used on input line 881.
 (pdftex.def)             Requested size: 86.24197pt x 73.4743pt.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 766.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 881.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [54
+) [64
 
 ]
 \tf@nav=\write7
@@ -2301,21 +2450,21 @@ File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 \tf@snm=\write9
 \openout9 = `Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 768.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 768.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 883.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 883.
 
 (./Presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 768.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 768.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 883.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 883.
 Package rerunfilecheck Info: File `Presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 64E8E649EC47CC30DAE903F8D0F982B7;362.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 768.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 883.
  ) 
 Here is how much of TeX's memory you used:
- 31608 strings out of 493029
- 618351 string characters out of 6136234
- 781187 words of memory out of 5000000
- 34342 multiletter control sequences out of 15000+600000
+ 31671 strings out of 493029
+ 619309 string characters out of 6136234
+ 781218 words of memory out of 5000000
+ 34379 multiletter control sequences out of 15000+600000
  55712 words of font info for 73 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
  58i,14n,75p,10441b,663s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2330,10 +2479,10 @@ symbols/msam7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Presentation.pdf (54 pages, 12195158 bytes).
+Output written on Presentation.pdf (64 pages, 55890096 bytes).
 PDF statistics:
- 1638 PDF objects out of 1728 (max. 8388607)
- 1465 compressed objects within 15 object streams
- 118 named destinations out of 1000 (max. 500000)
- 382 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1909 PDF objects out of 2073 (max. 8388607)
+ 1712 compressed objects within 18 object streams
+ 139 named destinations out of 1000 (max. 500000)
+ 407 words of extra memory for PDF output out of 10000 (max. 10000000)
 

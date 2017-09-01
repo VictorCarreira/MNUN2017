@@ -621,7 +621,7 @@
 		\begin{block}{}
 			\begin{figure}[H]
 				\centering
-				\includegraphics[scale=0.15]{Imagens/Snap001.png}
+				\includegraphics[scale=0.18]{Imagens/Snap001.png}
 			\end{figure}
 		\end{block}
 \end{frame}
@@ -644,15 +644,98 @@
 \end{frame}
 
 \begin{frame}
+		\frametitle{Condição de contorno não-reflexiva}
+		\framesubtitle{Reflexões}
+		\begin{block}{}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.18]{Imagens/Snap006.png}
+			\end{figure}
+		\end{block}
+\end{frame}
+
+
+\begin{frame}
 	\frametitle{Condição de contorno não-reflexiva}
 	\framesubtitle{One-way $1$D}
 	\begin{block}{Solução}
 		\begin{itemize}
-			\item Repor a equação da onda pela Eq Oneway;
+			\item Repor a equação da onda pela Eq.  da one-way;
 			\pause 
 			\item Impede que a energia se propague das bordas para dentro do mesh;
+			\pause
 		\end{itemize}
 	\end{block}
+	
+	\begin{block}{}
+			\begin{equation}
+			\dfrac{dp}{dx} - \dfrac{1}{c} \dfrac{\partial p}{\partial t}= 0
+			\end{equation}
+	\end{block}
+	
+		\begin{block}{}
+			\begin{equation}
+			\dfrac{dp}{dy} + \dfrac{1}{c} \dfrac{\partial p}{\partial t}= 0
+			\end{equation}
+	\end{block}
+	
+		\begin{block}{}
+			\begin{equation}
+			\dfrac{dp}{dz} + \dfrac{1}{c} \dfrac{\partial p}{\partial t}= 0
+			\end{equation}
+	\end{block}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Condição de contorno não-reflexiva}
+	\framesubtitle{One-way $1$D}
+\begin{block}{}
+			SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+\linebreak
+\\			
+  			IMPLICIT NONE
+  			INTEGER(KIND=SGL),INTENT(IN)::nx,nz,nt,x,z
+  			INTEGER(KIND=SGL)::i,j
+  			REAL(KIND=SGL), INTENT(IN)::t
+  			REAL(KIND=SGL), DIMENSION(:,:),ALLOCATABLE,INTENT(INOUT):: P2, P3, c
+\linebreak
+\\
+			!Borda Direita
+			j=nx 
+			DO i=1,nz
+  					P3(i,j)= -SQRT(c(i,j)) * (P2(i,j)-P2(i,j-1)) +P2(i,j)
+			ENDDO
+\linebreak
+\\
+			!Borda Esquerda
+			j=1
+			DO i=1,nz
+  					P3(i,j)= + SQRT(c(i,j)) * (P2(i,j+1)-P2(i,j)) +P2(i,j)
+			ENDDO
+\linebreak
+\\
+			!Fundo
+			i=nz
+			DO j=1,nx
+  					P3(i,j)= - SQRT(c(i,j)) * (P2(i,j)-P2(i-1,j)) +P2(i,j)
+			ENDDO
+\linebreak
+\\
+			ENDSUBROUTINE Oneway
+\end{block}
+\end{frame}	
+
+
+\begin{frame}
+		\frametitle{Condição de contorno não-reflexiva}
+		\framesubtitle{One-way}
+		\begin{block}{}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.18]{Imagens/Snap007.png}
+			\end{figure}
+		\end{block}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -660,77 +743,109 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Cerjan}
 
+\begin{frame}
+	\frametitle{Cerjan}
+	\framesubtitle{A função de Cerjan}
+	\begin{block}{}
+		\begin{equation}
+			F(j)=e^{-[fcer(ncer-j)]^{2}}
+		\end{equation}
+		\label{cerjan}
+	\end{block}
+	\pause
+	\begin{block}{}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.20]{Imagens/cerjan.png}
+		\end{figure}	
+	\end{block}
+\end{frame}	
+
+\begin{frame}
+	\frametitle{Cerjan}
+	\framesubtitle{A Função e a Subrotina}
+\begin{block}{Função}
+	SUBROUTINE FATCERJAN()
+	 \linebreak
+	 \\
+     IMPLICIT NONE
+     \linebreak
+     \\
+     OPEN(20,file="cerjan.txt")
+     !Cálculo do função de atenuação de Cerjan:
+     \linebreak
+     \\
+     DO i=1,ncer-1
+        g(i)=EXP(-(fcer*(ncer-i))**2)!OLHAR NO EXCEL
+    	WRITE(20,*) i,g(i)
+     ENDDO
+     \linebreak
+     \\
+     CLOSE(20)
+     \linebreak
+		\\
+	END SUBROUTINE
+\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cerjan}
+	\framesubtitle{A Função e a Subrotina}
+
+	\begin{block}{Subrotina}
+	SUBROUTINE Cerjan(g,ncer,P2,P3)
+	\linebreak
+	\\
+   IMPLICIT NONE
+    INTEGER ::i,j
+    INTEGER,INTENT(IN):: ncer
+    REAL(KIND=SGL),DIMENSION(ncer),INTENT(IN)::g
+    REAL(KIND=SGL),DIMENSION(nz,nx),INTENT(INOUT)::P2, P3
+    \linebreak
+    \\
+   !Borda esquerda
+    DO j= 1, ncer-1
+     DO i= 1, nz
+        P2(i,j)=g(j)*P2(i,j)
+        P3(i,j)=g(j)*P3(i,j)
+      ENDDO
+    ENDDO
+    \linebreak
+    \\
+	ENDSUBROUTINE Cerjan
+	\end{block}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Cerjan}
+\framesubtitle{Borda Esquerda}
+		\begin{block}{}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.18]{Imagens/Snap007cerjan.png}
+			\end{figure}
+		\end{block}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %---------------------------------------RESULTADO---------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Resultado final}
 
 
-%  \begin{frame}
-%    \begin{center}
-%       \flashmovie[width=10cm]{Imagens/temporal.swf} 
-%    \end{center}
-%  \end{frame}
-
-
-%\begin{frame}
-%
-%\centering % Para centralizarmos o vídeo
-%\includemedia[
-%label=nome_qualquer, % ! Importante para linkar o vídeo ao botão (ver abaixo)
-%width=0.8\linewidth, height=0.5\linewidth, % Dimensões
-%addresource=Imagens/temporal.swf, % ESTE É O SEU ARQUIVO DE VÍDEO (mesmo dir.)
-%transparent, % Opções para que o player tenha transparência
-%activate=pageopen, % Se você deseja que o vídeo esteja "carregado" ao abrir a página
-%flashvars={
-%source=Imagens/temporal.swf
-%&loop=false % Se você quer que o vídeo repita automaticamente 
-%&scaleMode=letterbox % Manter proporções (dimensionais) do vídeo
-%}
-%]{}{VPlayer.swf}
-%\vspace{1cm} % Espaçamento entre vídeo e botão
-%
-%% Agora, você cria o botão para dar play/pause. Neste caso, o botão é apenas a letra "pi".
-%
-%\mediabutton[
-%mediacommand=nome_qualquer:playPause,
-%overface=\color{black}{{\strut $\pi$}},
-%downface=\color{gray}{{\strut $\pi$}}
-%]{{\strut $\pi$}}
-%
-%\end{frame}
-
-%\begin{frame}
-%\begin{figure}[h!]
-%\centering    
-%\movie[label=show3,width=1.0\textwidth,poster
-%       ,autostart,showcontrols,loop] 
-%  {\includegraphics[width=1.0\textwidth]{/snap1.png}}{temporal.mp4}
-%  \caption{caption}
-% \end{figure} 
-%\end{frame}
-
-
-%\begin{frame}
-%\frametitle{Forward Kinematics}
-%
-%\begin{center}
-%\includemedia[
-%    activate=onclick,
-%    width=0.75\textwidth
-%]{\includegraphics{Imagens/snap1.png}}{Imagens/temporal.swf}
-%\end{center}
-%\end{frame}
-%\begin{frame}
-%
-%\includemedia[width=0.6\linewidth,height=0.6\linewidth,activate=pageopen,
-%passcontext,
-%transparent,
-%addresource=Imagens/temporal.mp4,
-%flashvars={source=Imagens/temporal.mp4}
-%]{\includegraphics[width=0.6\linewidth]{Imagens/snap1.png}}{Imagens/temporal.swf}
-%
-%\end{frame}
+\begin{frame}
+		\frametitle{Resultado Final}
+		\framesubtitle{One-way e Cerjan}
+		\begin{block}{}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.18]{Imagens/Snap007cerjeoneway.png}
+			\end{figure}
+		\end{block}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %-----------------------------BIBLIORGRAFIA---------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
