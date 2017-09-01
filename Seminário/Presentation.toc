@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Introdu\IeC {\c c}\IeC {\~a}o}{3}{0}{1}
+\beamer@sectionintoc {2}{Controle de Vers\IeC {\~a}o}{11}{0}{2}
+\beamer@sectionintoc {3}{O GitHub no programa de modelagem}{23}{0}{3}
+\beamer@sectionintoc {4}{One-way}{40}{0}{4}
+\beamer@sectionintoc {5}{Cerjan}{50}{0}{5}
+\beamer@sectionintoc {6}{Resultado final}{51}{0}{6}
+\beamer@sectionintoc {7}{Bibliografia}{52}{0}{7}
