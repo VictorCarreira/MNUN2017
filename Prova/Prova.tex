@@ -1,0 +1,36 @@
+\documentclass[16pt,a4paper,final]{report}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{indentfirst}
+\author{Leandro Di Bartolo}
+\title{Prova prática}
+\begin{document}
+	PROVA PRÁTICA DATA DE ENTREGA: 08/09/2017 \\
+	 
+	Adaptar algoritmo de propagação de ondas acústicas em Fortran (ou um algoritmo equivalente em Fortran ou qualquer outra linguagem) para a migração
+	reversa no tempo pós-empilhamento (zero offset). O programa deverá ser rodado para dado sintético simples (de poucas
+	camadas e com pequeno contraste de impedância) gerado com o conceito do refletor explosivo, o que é parte integrante do trabalho.
+	Assim, as seguintes etapas devem ser realizadas:
+	
+	 1) Geração do dados sintético (seção empilhada) a ser migrado e do modelo
+	de velocidades (usado para gerar o dado e na RTM). Sugestão: adotar um modelo de velocidades de 3 camadas, isto é, com 2 refletores, um plano e paralelo com
+	mergulho e outro com curvatura. O programa de modelagem deve ser empregado 	utilizando o modelo de velocidade gerado. A ideia do modelo do refletor explosivo
+	deve ser utilizada no programa de modelagem para a geração da seção.
+	
+	 2) Implementação do algoritmo de migração RTM zero offset e aplicar o
+	algoritmo desenvolvido a seção gerada no item anterior. Dica: O algoritmo de modelagem deve ser adaptado, sendo o modelo de velocidades gerado e a seção
+	sísmica os dados de entrada.
+	
+	O trabalho deve ser enviado para leandrodibartolo@gmail.com e deve constar de um: 
+	
+	(a) relatório descrevendo o trabalho, 
+	
+	(b) do modelo de velocidade gerado e o código fonte utilizado para gerá-lo,
+	
+	 (c) da seção 	sísmica sintética gerada em conjunto com o código fonte utilizado para 	gerá-la e
+	 
+	  (d) da seção migrada com o algoritmo RTM zero Offset, bem como o código fonte utilizado para gerá-la.
+\end{document}
