@@ -3,25 +3,33 @@ IMPLICIT NONE
 REAL, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 REAL, PARAMETER:: DBL = SELECTED_REAL_KIND(p=14, r=200)
 INTEGER::i, j, k, Nx, Nz
-REAL, DIMENSION(401,601)::vel
+REAL, DIMENSION(301,601)::vel
 
 Nx=601
-Nz=401
+Nz=301
 
 ! Este laço gera a matriz de velocidades camada1
-DO j=1,601
-  DO i=1,201
-    vel(i,j)=1500.0
-  ENDDO
-ENDDO
+!DO j=1,601
+!  DO i=1,201
+!    vel(i,j)=1500.0
+!  ENDDO
+!ENDDO
 
 
 ! Este laço gera a matriz de velocidades camada2
-DO j=1,601
-  DO i=202,401
-    vel(i,j)=2000.0
-  ENDDO
-ENDDO
+!DO j=1,601
+!  DO i=202,401
+!    vel(i,j)=2000.0
+!  ENDDO
+!ENDDO
+
+
+y=0.004280
+
+DO j=1,
+
+
+
 
 !PRINT*,vel
 
