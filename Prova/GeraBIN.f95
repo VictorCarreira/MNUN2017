@@ -5,8 +5,8 @@ REAL, PARAMETER:: DBL = SELECTED_REAL_KIND(p=14, r=200)
 INTEGER::i, j, k, Nx, Nz
 REAL, DIMENSION(301,601)::vel
 
-Nx=601
-Nz=301
+!Nx=601
+!Nz=301
 
 ! Este laço gera a matriz de velocidades camada1
 !DO j=1,601
