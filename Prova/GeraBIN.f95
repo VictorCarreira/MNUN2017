@@ -1,13 +1,26 @@
-PROGRAM LeituraBIN
+PROGRAM Modelo
 IMPLICIT NONE
 REAL, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 REAL, PARAMETER:: DBL = SELECTED_REAL_KIND(p=14, r=200)
-INTEGER::i, j, k, Nx, Nz
-REAL, DIMENSION(301,601)::vel
+INTEGER::i, j, k, Nx, Nz, zr
+REAL, ALLOCATABLE, DIMENSION(:,:)::vel
 
-Nx=601
-Nz=301
+Nx=602
+Nz=302
 
+ALLOCATE(vel(Nz,Nx))
+
+vel=1500
+
+
+
+
+DO i=1,Nx
+  zr=NINT(0.07*i+619,57)
+  DO j=1,zr
+    vel(i,j)=2000
+  ENDDO
+ENDDO
 ! Este laço gera a matriz de velocidades camada1
 !DO j=1,601
 !  DO i=1,201
@@ -24,12 +37,6 @@ Nz=301
 !ENDDO
 
 
-y=0.004280
-
-DO j=1,
-
-
-
 
 !PRINT*,vel
 
@@ -40,8 +47,4 @@ WRITE(10,REC=1)((vel(i,j),i=1,Nz),j=1,Nx)! Isto é um laço interno
 CLOSE(10)
 
 
-
-
-
-
-END PROGRAM LeituraBIN
+END PROGRAM Modelo
