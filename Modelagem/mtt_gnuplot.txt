@@ -1,0 +1,3 @@
+set yrange [:] reverse
+set palette defined (-3 "red", 0 'white', 3 'blue')
+plot "./saida/mtt.bin" binary format="%float" array=601x301 scan=yx with image

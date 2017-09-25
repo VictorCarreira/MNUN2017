@@ -1,0 +1,3 @@
+set yrange [:] reverse
+set palette defined (-3 "red", 0 'white', 3 'blue')
+plot "sismo.bin" binary format="%float" array=302x602 scan=yx with image
