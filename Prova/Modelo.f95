@@ -1,4 +1,5 @@
 PROGRAM Modelo
+!gfortran -fbounds-check -fbacktrace -Wall -Wextra -pedantic Modelo.f95 -o Modelo
 IMPLICIT NONE
 !REAL, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=10)
 !REAL, PARAMETER:: DBL = SELECTED_REAL_KIND(p=14, r=200)
