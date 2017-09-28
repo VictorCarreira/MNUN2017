@@ -1,20 +1,24 @@
 PROGRAM ZeroOffSet
-  !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  !Aluno: Victor Ribeiro Carreira
-  !Professor: Leandro Di Bartolo
-  !Este programa visa cumprir os requisitos da disciplina MNUM,
-  !simulando uma Onda 2D acústica variando no tempo de uma
-  !seção empilhada simples pelo modelo do refletor explosivo.
-  !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++!
+  !Aluno: Victor Ribeiro Carreira                                   !
+  !Professor: Leandro Di Bartolo                                    !
+  !Este programa visa cumprir os requisitos da disciplina MNUM,     !
+  !simulando uma migração reversa no tempo de uma onda 2D acústica  !
+  !variando no tempo de uma seção empilhada simples pelo modelo do  !
+  !refletor explosivo.                                              !
+  !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++!
+! Para usar compilação com flags utiilze:
+!gfortran -fbounds-check -fbacktrace -Wall -Wextra -pedantic "pasta/subpasta/nomedopragrama.f95" -o nomedoexecutável
+
 
 ! Declaração de Variáveis Globais
 IMPLICIT NONE
 INTEGER, PARAMETER:: SGL = SELECTED_REAL_KIND(p=6, r=20)
-INTEGER ::i, j, n, k, nx, nz, nt, ns, x, z, fc, snap_passos, xifonte, zifonte, nsnap, csnap=0
-INTEGER :: aux, ncer, xfonte, zfonte, nfonte, dt_sismo,dt_snap, iprof, csismo=0
+INTEGER ::i, j, n, k, nx, nz, nt, ns, x, z, snap_passos, xifonte, zifonte, nsnap, csnap=0    !fc
+INTEGER :: ncer, xfonte, zfonte, nfonte, dt_sismo, iprof ! dt_snap  !, csismo=0
 REAL(KIND=SGL):: inicial, final, custocomputacional, dt
 REAL(KIND=SGL):: t ,fcorte, ampl_fonte, fcer, h, c_const
-REAL(KIND=SGL)::alfa2, alfa4, beta
+REAL(KIND=SGL)::alfa2, alfa4, beta, aux
 !REAL(KIND=SGL), PARAMETER::pi=3.1416
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:):: fonte
 REAL(KIND=SGL),ALLOCATABLE, DIMENSION(:,:):: P1, P2, P3, c, sismo
@@ -29,20 +33,19 @@ CALL cpu_time(inicial)
 CALL Entrada()
 
 CALL Modelo()
- !c=1500.0!Modelo homogêneo e isotrópico
- !c=c/2.0
- c=c*c*(dt*dt)/(h*h) !para fica mais rápido no loop do operador
+ 
+ c=c*c*(dt*dt)/(h*h) !para fica mais rápido no laço do operador
 
-CALL Dispersao(c,alfa2,alfa4,fcorte,h)
+CALL Dispersao(Nx,Nz,alfa2,alfa4,fcorte,h)
 
-CALL Estabilidade(h,beta,c)
+CALL Estabilidade(h,beta) !,c)
 
-CALL Explosiva(fcorte, ampl_fonte, t, nt, fonte,dt)
+CALL Explosiva(fcorte, ampl_fonte, nt, fonte,dt,nfonte)
 
 
 !Cálculo das DF (Stencil)
 DO n=1,nt
-IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avanço no tempo de 50 em 50 passos
+  IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avanço no tempo de 50 em 50 passos
   !P1(zifonte,xifonte)=P1(zifonte,xifonte)-fonte(n)!Aplicando a fonte unitária central
   !Aplicação das fontes do modelo do refletor explosivo
   
@@ -68,22 +71,23 @@ IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avanço no tempo de 50 
         P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
     ENDDO
-
+  !Print*,c
     
-  CALL Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+  CALL Oneway(nx, nz, c, P2, P3)
   CALL Cerjan(g,ncer,P2,P3)
   CALL Snap()
 
-  DO j=1,nx
+  DO j=1,nx-1
       sismo(n,j)=P3(iprof,j)
   ENDDO
+
   
   !Atualizacao dos campos para o próximo passo da marcha no tempo
   DO j=1,nx
     DO i=1,nz
-      aux=P3(i,j)
-      P1(i,j)=P2(i,j)
-      P2(i,j)=aux
+      aux = P3(i,j)
+      P1(i,j) = P2(i,j)
+      P2(i,j) = aux
     ENDDO
   ENDDO
   
@@ -91,17 +95,18 @@ IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avanço no tempo de 50 
   !P2=P3
 ENDDO  ! final da marcha no tempo
 
-
-do i = 1, 3500
-  sismo(i,:) = 0.
-enddo
+!do i = 1, 3500
+!  sismo(i,:) = 0.
+!enddo
 
 !Impressao do sismograma em arquivo binário
-write(*,*) ' ' ; write(*,*) 'Salvando sismograma...' ; write(*,*) ' '
-open(20,file="sismo.bin",status="replace",access="direct", &
-form="unformatted",recl=4*ns*nx)
-write(20,rec=1)((sismo(j,i),j=1,ns),i=1,nx)
-close(20)
+WRITE(*,*) ' ' ;  WRITE(*,*) 'Salvando sismograma...' ;   WRITE(*,*) ' '
+OPEN(20,file="sismo.bin",status="replace",access="direct", &
+form="unformatted",recl=4*nt*nx)
+WRITE(20,rec=1)( (sismo(j,i),j=1,SIZE(sismo,1) ),i=1,SIZE(sismo,2) )
+CLOSE(20)
+
+WRITE(*,*) 'Dimensão do sismograma->',SIZE(sismo,1),'     X', SIZE(sismo,2)
 
 CALL cpu_time(final)
 custocomputacional=final-inicial
@@ -146,7 +151,7 @@ IF(existe_arq) THEN
   READ(2,*) nsnap ! número de snapshots
   READ(2,*) dt_sismo ! Número de pontos para pular o sismograma reduzido
   READ(2,*) iprof ! profundidade do sismo
-
+  READ(2,*) nfonte ! numero de fontes simuladas
   !**********************************************
   WRITE(*,*)'**********************Parametos lidos*****************************'
   WRITE(*,*) "x = ",x     ! comprimento Stencil na direção x (cm)
@@ -163,18 +168,19 @@ IF(existe_arq) THEN
   WRITE(*,*) "fcer,ncer=", fcer,ncer ! Fator de atenuação
   ! Critérios de Estabilidade e Dispersao
   WRITE(*,*) "alfa2=", alfa2  ! Alfa de segunda ordem
-  WRITE(*,*) "alfa4=", alfa4  ! Alfa de quarta ordem
+  WRITE(*,*) "alfa4=", alfa4  ! Alfa de quarta ordem                                                     
   WRITE(*,*) "beta=", beta  ! numero de Iteracoes para levar de 1 para 2
   WRITE(*,*) "nsnap=", nsnap ! número de snapshots
   WRITE(*,*) "dt_sismo=",dt_sismo ! Número de pontos para pular o sismograma reduzido
   WRITE(*,*) "iprof=",iprof ! profundidade do sismo
+  WRITE(*,*) "nfonte=",nfonte ! numero de fontes simuladas
   WRITE(*,*)'******************************************************************'
 
       !discretizacao da malha
       nx=nint(x/h)+1
       nz=nint(z/h)+1
       nt=int(t/dt)+1
-      ns=nt/dt_sismo
+      ns=int(nt/dt_sismo)+1
 
       !posição da fonte na malha
       xifonte=nint(xfonte/h)+1
@@ -189,7 +195,7 @@ IF(existe_arq) THEN
       WRITE(*,*) "xifonte,zifonte = ",xifonte,zifonte
       WRITE(*,*) "*************************************************************"
 
-      ALLOCATE(P1(nz,nx),P2(nz,nx),P3(nz,nx),c(nz,nx),sismo(ns,nx))
+      ALLOCATE(P1(nz,nx),P2(nz,nx),P3(nz,nx),c(nz,nx),sismo(nt,nx))
       ALLOCATE(g(ncer-1))
 
 
@@ -200,17 +206,17 @@ IF(existe_arq) THEN
 
 
  !Condição inicial. Zerando variáveis
-        !P1=0.0
-        !P2=0.0
-        !P3=0.0
+  P1=0.0
+  P2=0.0
+  P3=0.0
 
-  DO j=1,nx
-    DO i=1,nz
-      P1(i,j)=0.0
-      P2(i,j)=0.0
-      P3(i,j)=0.0
-    ENDDO
-  ENDDO
+  !DO j=1,nx
+ !   DO i=1,nz
+ !     P1(i,j)=0.0
+ !     P2(i,j)=0.0
+ !     P3(i,j)=0.0
+ !   ENDDO
+ ! ENDDO
 
      !função de Cerjan
      CALL FAT_CERJAN()
@@ -219,13 +225,13 @@ ENDSUBROUTINE Entrada
 
 !------------------------------------------------------------------------------------
 
-SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte,dt)!Cálculo da fonte
+SUBROUTINE Explosiva(fcorte, ampl_fonte, nt, fonte,dt,nfonte)!Cálculo da fonte
 
   IMPLICIT NONE
 
-  REAL(KIND=SGL),INTENT(IN)::fcorte, ampl_fonte, t
+  REAL(KIND=SGL),INTENT(IN)::fcorte, ampl_fonte !, t
   INTEGER, INTENT(IN)::  nt
-  INTEGER :: nfonte
+  INTEGER(KIND=SGL),INTENT(OUT) :: nfonte
   REAL(KIND=SGL), DIMENSION(:), ALLOCATABLE, INTENT(OUT):: fonte
   REAL(KIND=SGL):: t0, dt, fc
   REAL(KIND=SGL), PARAMETER::pi=3.141593
@@ -238,7 +244,7 @@ SUBROUTINE Explosiva(fcorte, ampl_fonte, t, nt, fonte,dt)!Cálculo da fonte
 
   fonte=0.0
   !nfonte=NINT(2*t0/dt) !fonte pontual
-   nfonte=4*sqrt(pi)/(fcorte*dt)
+   nfonte= 4 * NINT(sqrt(pi)/(fcorte*dt))
 
   DO i=1, nfonte
     fonte(i)=ampl_fonte*(2*pi*(pi*fc*(i*dt-t0))**2-1.)*EXP(-pi*(pi*fc*(i*dt-t0))**2)
@@ -260,11 +266,11 @@ ENDSUBROUTINE Explosiva
 
 !------------------------------------------------------------------------------------
 
-SUBROUTINE Oneway(nx, nz, nt, x, z, t, c, P2, P3)
+SUBROUTINE Oneway(nx, nz, c, P2, P3)
   IMPLICIT NONE
-  INTEGER(KIND=SGL),INTENT(IN)::nx,nz,nt,x,z
+  INTEGER(KIND=SGL),INTENT(IN)::nx,nz !,x,z  !nt,x,z
   INTEGER(KIND=SGL)::i,j
-  REAL(KIND=SGL), INTENT(IN)::t
+  !REAL(KIND=SGL), INTENT(IN)::t
   REAL(KIND=SGL), DIMENSION(:,:),ALLOCATABLE,INTENT(INOUT):: P2, P3, c
 
 !Borda Direita
@@ -316,7 +322,7 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
     ENDDO
 
     !Fundo
-
+     k=100
     DO i= nz-ncer+2, nz
       DO j= 1, nx
         P2(i,j)=g(k)*P2(i,j)
@@ -331,11 +337,11 @@ ENDSUBROUTINE Cerjan
 !-----------------------------------------------------------------------------------
 
 
-SUBROUTINE Dispersao(c, alfa2, alfa4, fcorte, h)
+SUBROUTINE Dispersao(Nx,Nz,alfa2, alfa4, fcorte, h)
 
   IMPLICIT NONE
-
-  REAL(KIND=SGL),INTENT(IN), DIMENSION(Nz,Nx)::c
+  INTEGER, INTENT(IN):: Nx,Nz
+  !REAL(KIND=SGL),INTENT(IN), DIMENSION(Nz,Nx)::c
   REAL(KIND=SGL),INTENT(IN):: alfa2, alfa4, fcorte
   REAL(KIND=SGL),INTENT(IN):: h
 
@@ -360,9 +366,9 @@ ENDSUBROUTINE Dispersao
 
 !----------------------------------------------------------------------------------
 
-SUBROUTINE Estabilidade(h, beta, c)
+SUBROUTINE Estabilidade(h, beta) !, c)
   IMPLICIT NONE
-  REAL(KIND=SGL),INTENT(IN), DIMENSION(Nz,Nx)::c
+  !REAL(KIND=SGL),INTENT(IN), DIMENSION(Nz,Nx)::c
   REAL(KIND=SGL),INTENT(IN)::beta, h
 
   !Critério de Estabilidade:
@@ -406,8 +412,9 @@ SUBROUTINE Modelo()
     WRITE(*,*)'Rodando na agua'
     c=1500.0
   ENDIF
+ 
 
-
+ 
 ENDSUBROUTINE Modelo
 
 
@@ -417,16 +424,14 @@ ENDSUBROUTINE Modelo
 !%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FUNÇÕES UTILIZADAS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 SUBROUTINE FAT_CERJAN()
-
-     IMPLICIT NONE
-     OPEN(20,file="cerjan.txt")
-     !Cálculo do função de atenuação de Cerjan:
-     DO i=1,ncer-1
-        g(i)=EXP(-(fcer*(ncer-i))**2)!OLHAR NO EXCEL
-    	WRITE(20,*) i,g(i)
-     ENDDO
-     CLOSE(20)
-
+ IMPLICIT NONE
+ OPEN(20,file="cerjan.txt")
+ !Cálculo do função de atenuação de Cerjan:
+ DO i=1,ncer-1
+   g(i)=EXP(-(fcer*(ncer-i))**2)!OLHAR NO EXCEL
+   WRITE(20,*) i,g(i)
+ ENDDO
+ CLOSE(20)
 END SUBROUTINE
 
 
