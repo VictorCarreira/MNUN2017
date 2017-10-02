@@ -24,9 +24,9 @@ ENDDO
 !Interface 2
 DO j=1,Nx
   IF (j.ge.245 .and. j.le.345) THEN
-    zc=230+NINT(SQRT(2500.0-(j-295.0)**2))
+    zc=150+NINT(SQRT(2500.0-(j-295.0)**2))
   ELSE
-    zc=230
+    zc=150
   ENDIF
   DO i=zc,Nz
     vel(i,j)=2100.0
