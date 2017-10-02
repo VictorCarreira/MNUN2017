@@ -33,6 +33,8 @@ CALL cpu_time(inicial)
 CALL Entrada()
 
 CALL Modelo()
+
+ c=c/2.0
  
  c=c*c*(dt*dt)/(h*h) !para fica mais rápido no laço do operador
 
@@ -58,9 +60,9 @@ DO n=1,nt
 
   DO j=1,Nx
     IF (j.GE.245 .AND. j.LE.345) THEN
-      zfonte=230+NINT(SQRT(2500.0-(j-295.0)**2))
+      zfonte=150+NINT(SQRT(2500.0-(j-295.0)**2))
     ELSE
-     zfonte = 230
+     zfonte = 150
     ENDIF
     IF(n.LE.nfonte) P1(zfonte,j) = P1(zfonte,j) - fonte(n)
   ENDDO
@@ -71,7 +73,7 @@ DO n=1,nt
         P3(i,j)=2*P2(i,j)-P1(i,j)+c(i,j)*(P2(i-1,j)-2*P2(i,j)+P2(i+1,j)+P2(i,j-1)-2*P2(i,j)+P2(i,j+1))
       ENDDO
     ENDDO
-  !Print*,c
+  
     
   CALL Oneway(nx, nz, c, P2, P3)
   CALL Cerjan(g,ncer,P2,P3)
@@ -322,7 +324,7 @@ SUBROUTINE Cerjan(g,ncer,P2,P3)
     ENDDO
 
     !Fundo
-     k=100
+    k=100
     DO i= nz-ncer+2, nz
       DO j= 1, nx
         P2(i,j)=g(k)*P2(i,j)
