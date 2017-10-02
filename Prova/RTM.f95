@@ -47,13 +47,11 @@ CALL Estabilidade(h,beta) !,c)
 
 !CALL Explosiva(fcorte, ampl_fonte, nt, fonte,dt)
 
-
-
 DO n=nt,1,-1 !Início do laço temporal. Marcha no tempo reversa!!!!
 IF(mod(n,50)==0) WRITE(*,*) "passo",n !imprime na tela o avanço no tempo de 50 em 50 passos
- 
+
  DO j=1,nx
-    P3(iprof,j) = P3(iprof,j) - sismo(n,j) !INJEÇÃO DE ENERGIA NAS INTERFACES.
+    P1(iprof,j) = P1(iprof,j) - sismo(n,j) !INJEÇÃO DE ENERGIA NAS INTERFACES.
  ENDDO
 
     DO j=2,nx-1!dimensão lenta
