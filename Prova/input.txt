@@ -1,18 +1,18 @@
-1202       # comprimento Stencil na direção x (cm)
-602       # comprimento Stencil na direção z (cm)
+3005       # comprimento Stencil na direção x (cm)
+1505       # comprimento Stencil na direção z (cm)
 2          # Iteracoes temporais, t
 1500.0, "VELOCIDADES.bin"   #Velocidade de onda p, c
-2        # Espacamento entre os pontos, h
+5        # Espacamento entre os pontos, h
 8.0E-4   # Discretizacao temporal, dt
 250       # Posicao da fonte na posição horizontal, xfonte
 250       # Posicao da fonte na posição vertical, zfonte
 10       # Amplitude da fonte, ampl_fonte
 60       # Frequencia de corte, fcorte
-1.50E-3,100  # Frequencia de atenuação e número de cerjan, fcer, ncer
+2.50E-3,101  # Frequencia de atenuação e número de cerjan, fcer, ncer
 5        # Criterio de dispersao de segunda ordem, alfa2
 10       # Criterio de dispersao quarta ordem , alfa4
 4        # numero de Iteracoes para levar de 1 para 2, beta
-20      # numero de snapshots ,nsnap
+50      # numero de snapshots ,nsnap
 10      # Número de pontos para pular o sismograma reduzido, dt_sismo
 3     # profundidade, iprof
-10    # numero de fontes simuladas (nfonte)
+5    # numero de fontes simuladas (nfonte)
